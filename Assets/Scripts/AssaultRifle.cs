@@ -1,18 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperRifle : Weapon
+public class AssaultRifle : Weapon
 {
     // Start is called before the first frame update
     void Start()
     {
-        clipCapacity = 5;
+        clipCapacity = 30;
         shotsPerMin = 1;
         reloadTime = 2;
-        kickbacklForce = 10;
-        damagePoint = 20;
+        kickbacklForce = 3;
+        damagePoint = 7;
     }
 
     // Update is called once per frame

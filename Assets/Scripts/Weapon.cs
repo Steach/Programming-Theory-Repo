@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public int clipCapacity {get; set;}
-    public int shotsPerMin {get; set;}
-    public float reloadTime {get; set;}
-    public float kickbacklForce {get; set;}
-    public float damagePoint {get; set;}
-    private int oneMin = 60;
+    protected int clipCapacity;
+    protected int shotsPerMin;
+    protected float reloadTime;
+    protected float kickbacklForce;
+    protected float damagePoint;
+    protected int oneMin = 60;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +24,10 @@ public class Weapon : MonoBehaviour
         
     }
 
-    public int CalcSPM(int clip, int reload)
+    /*public int CalcSPM(int clip, int reload)
     {
         float countpermin = oneMin/(clip + reload);
         int spm = Mathf.RoundToInt(countpermin * clip);
         return spm;
-    }
+    }*/
 }
