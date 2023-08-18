@@ -10,12 +10,13 @@ public class Weapon : MonoBehaviour
     protected float reloadTime;
     protected float kickbacklForce;
     protected float damagePoint;
+    protected float bulletSpeed;
     protected int oneMin = 60;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -24,10 +25,8 @@ public class Weapon : MonoBehaviour
         
     }
 
-    /*public int CalcSPM(int clip, int reload)
+    virtual protected void Shoot()
     {
-        float countpermin = oneMin/(clip + reload);
-        int spm = Mathf.RoundToInt(countpermin * clip);
-        return spm;
-    }*/
+
+    }
 }
