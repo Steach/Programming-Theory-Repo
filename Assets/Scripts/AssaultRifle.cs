@@ -6,7 +6,8 @@ public class AssaultRifle : Weapon
 {
     [SerializeField] GameObject bulletPrefab;
     private Vector3 starPosition;
-    Transform firePosition;
+    [SerializeField] private Transform firePosition;
+    private Vector3 offsetForePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class AssaultRifle : Weapon
         kickbacklForce = 3;
         damagePoint = 7;
         bulletSpeed = 10;
+        offsetForePos = new Vector3 (0, -0.136f, 1.079f);
     }
 
     // Update is called once per frame
@@ -30,7 +32,6 @@ public class AssaultRifle : Weapon
 
     override protected void Shoot()
     {
-        firePosition = transform;
         GameObject bulletInstance = Instantiate(bulletPrefab, firePosition.position, firePosition.rotation) as GameObject;
         //bulletInstance.transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
     }

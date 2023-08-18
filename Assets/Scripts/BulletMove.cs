@@ -7,7 +7,7 @@ public class BulletMove : AssaultRifle
     // Start is called before the first frame update
     void Start()
     {
-        bulletSpeed = 10;
+        bulletSpeed = 200;
     }
 
     // Update is called once per frame
