@@ -13,20 +13,11 @@ public class Weapon : MonoBehaviour
     protected float bulletSpeed;
     protected int oneMin = 60;
 
-    // Start is called before the first frame update
-    void Start()
+    virtual protected void Shoot(GameObject bulPrefab, Transform firePos)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    virtual protected void Shoot()
-    {
-
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
+        }
     }
 }

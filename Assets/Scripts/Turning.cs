@@ -15,11 +15,17 @@ public class Turning : MonoBehaviour
     void Update()
     {
         Turn();
+        Debug.Log(transform.rotation.x);
     }
 
     void Turn()
     {
         float inclineMovement = Input.GetAxis("Mouse Y") * turnSpeed * Time.deltaTime;
         transform.Rotate(Vector3.left * inclineMovement);
+    }
+
+    void boundaryLimits()
+    {
+
     }
 }
