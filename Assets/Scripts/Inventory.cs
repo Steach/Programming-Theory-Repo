@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -8,38 +9,87 @@ public class Inventory : MonoBehaviour
     protected int sniperBullets = 30;
     protected int handgunBullets = 32;
     private EBulletsNum currentBulNum;
-    virtual protected void Assault(int bulNum)
+    [SerializeField] protected TextMeshProUGUI bulletText;
+    
+    virtual protected void BulletsStuff(int bulNum, int clips)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
-        
 
-        switch(bulNum)
+        switch(commingBullet)
         {
             case EBulletsNum.assault:
             {
-                assaultBullets -= 1;
-                Debug.Log(assaultBullets);
+                if(assaultBullets > 0)
+                {
+                    assaultBullets -= clips;
+                    //return assaultBullets;
+                }
             }
             break;
 
             case EBulletsNum.sniper:
             {
-                sniperBullets -= 1;
-                Debug.Log(sniperBullets);
+                if(sniperBullets > 0)
+                {
+                    sniperBullets -= clips;
+                    //return sniperBullets;
+                }
             }
             break;
 
             case EBulletsNum.handgun:
             {
-                handgunBullets -= 1;
-                Debug.Log(handgunBullets);
+                if(handgunBullets > 0)
+                {
+                    handgunBullets -= clips;
+                    //return handgunBullets;
+                }
             }
             break;
 
-            default: break;
-
+            default: break; //return 0;
         }
-        assaultBullets -= 1;
+
+        //return 0;
+    }
+
+    virtual protected int BulletsStuff(int bulNum)
+    {
+        EBulletsNum commingBullet = (EBulletsNum) bulNum;
+
+        switch(commingBullet)
+        {
+            case EBulletsNum.assault:
+            {
+                if(assaultBullets > 0)
+                {
+                    return assaultBullets;
+                }
+            }
+            break;
+
+            case EBulletsNum.sniper:
+            {
+                if(sniperBullets > 0)
+                {
+                    return sniperBullets;
+                }
+            }
+            break;
+
+            case EBulletsNum.handgun:
+            {
+                if(handgunBullets > 0)
+                {
+                    return handgunBullets;
+                }
+            }
+            break;
+
+            default: return 0;
+        }
+
+        return 0;
     }
 }
 
