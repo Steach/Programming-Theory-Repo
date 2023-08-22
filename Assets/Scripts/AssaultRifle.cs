@@ -9,6 +9,7 @@ public class AssaultRifle : Weapon
     private Vector3 offsetForePos;
     private float fireTimeout;
     private float fireRatePS = 11.6f;
+    private int weaponIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +26,10 @@ public class AssaultRifle : Weapon
     void Update()
     {
         fireTimeout += Time.deltaTime;
-        if (fireTimeout >= 1f / fireRatePS)
+        if (fireTimeout >= (1f / fireRatePS) && assaultBullets > 0 && Input.GetKey(KeyCode.Mouse0))
         {
             Shoot(bulletPrefab, firePosition);
+            Assault(weaponIndex);
             fireTimeout = 0f;
         }
     }
