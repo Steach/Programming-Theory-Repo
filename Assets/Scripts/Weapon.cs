@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Weapon : Inventory
 {
     protected int clipCapacity;
     protected int shotsPerMin;
@@ -15,9 +15,6 @@ public class Weapon : MonoBehaviour
 
     virtual protected void Shoot(GameObject bulPrefab, Transform firePos)
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
-        }
+        GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
     }
 }
