@@ -21,7 +21,8 @@ public class AssaultRifle : Weapon
         bulletSpeed = 10;
         assaultBullets = assaultBullets - clipCapacity;
         bulletText.text = "Bullets: " + clipCapacity + "/" + assaultBullets;
-        currentClipCapacity = clipCapacity;        
+        currentClipCapacity = clipCapacity;  
+        shootExplosion.Stop();      
     }
 
     // Update is called once per frame
@@ -33,9 +34,13 @@ public class AssaultRifle : Weapon
         fireTimeout += Time.deltaTime;
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
         {
-            Shoot(bulletPrefab, firePosition);
+            Shoot(bulletPrefab, firePosition, shootExplosion);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
+        }
+        else
+        {
+            shootExplosion.Stop();
         }
         currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
     }

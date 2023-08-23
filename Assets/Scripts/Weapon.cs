@@ -17,11 +17,13 @@ public class Weapon : Inventory
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePosition;
     [SerializeField] protected TextMeshProUGUI reloadingText;
+    [SerializeField] protected ParticleSystem shootExplosion;
     
 
-    virtual protected void Shoot(GameObject bulPrefab, Transform firePos)
+    virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle)
     {
         GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
+        shootPrticle.Play();
     }
 
     virtual protected int Reload(int currentClipCapacity, int clipCap, int weaponID)
