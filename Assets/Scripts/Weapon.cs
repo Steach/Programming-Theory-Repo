@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
 public class Weapon : Inventory
 {
@@ -14,6 +16,7 @@ public class Weapon : Inventory
     protected int oneMin = 60;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePosition;
+    [SerializeField] protected TextMeshProUGUI reloadingText;
     
 
     virtual protected void Shoot(GameObject bulPrefab, Transform firePos)
@@ -23,27 +26,36 @@ public class Weapon : Inventory
 
     virtual protected int Reload(int currentClipCapacity, int clipCap, int weaponID)
     {
-        int ammoCapacity = clipCap - currentClipCapacity;
-        int bullets = BulletsStuff(weaponID);
-        Debug.Log("Bullets: " + bullets);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            int ammoCapacity = clipCap - currentClipCapacity;
+            int bullets = BulletsStuff(weaponID);
 
-        if (bullets > ammoCapacity)
-        {
-            currentClipCapacity += ammoCapacity;
-            BulletsStuff(weaponID, ammoCapacity);
-            ammoCapacity = 0;
-            return currentClipCapacity;
+            if (bullets > ammoCapacity)
+            {
+                currentClipCapacity += ammoCapacity;
+                BulletsStuff(weaponID, ammoCapacity);
+                ammoCapacity = 0;
+            }
+            else if (bullets <= ammoCapacity)
+            {
+                currentClipCapacity += bullets;
+                BulletsStuff(weaponID, bullets);
+                ammoCapacity = 0;
+            }
         }
-        else if (bullets <= ammoCapacity)
+        return currentClipCapacity;        
+    }
+
+    virtual protected string RealodingText(int currentClipCapacity)
+    {
+        if (currentClipCapacity > 0)
         {
-            currentClipCapacity += bullets;
-            BulletsStuff(weaponID, ammoCapacity);
-            ammoCapacity = 0;
-            return currentClipCapacity;
+            return "";      
         }
         else
         {
-            return 0;
+            return "No ammo. Need to reload.";
         }
     }
 }

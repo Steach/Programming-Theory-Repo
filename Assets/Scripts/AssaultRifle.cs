@@ -27,6 +27,8 @@ public class AssaultRifle : Weapon
     // Update is called once per frame
     void Update()
     {
+        reloadingText.text = RealodingText(currentClipCapacity);
+
         bulletText.text = "Bullets: " + currentClipCapacity + "/" + assaultBullets;
         fireTimeout += Time.deltaTime;
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
@@ -35,10 +37,6 @@ public class AssaultRifle : Weapon
             currentClipCapacity -= 1;
             fireTimeout = 0f;
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
-        }
+        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
     }
 }

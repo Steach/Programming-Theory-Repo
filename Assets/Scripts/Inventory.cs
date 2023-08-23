@@ -22,7 +22,6 @@ public class Inventory : MonoBehaviour
                 if(assaultBullets > 0)
                 {
                     assaultBullets -= clips;
-                    //return assaultBullets;
                 }
             }
             break;
@@ -32,7 +31,6 @@ public class Inventory : MonoBehaviour
                 if(sniperBullets > 0)
                 {
                     sniperBullets -= clips;
-                    //return sniperBullets;
                 }
             }
             break;
@@ -42,15 +40,12 @@ public class Inventory : MonoBehaviour
                 if(handgunBullets > 0)
                 {
                     handgunBullets -= clips;
-                    //return handgunBullets;
                 }
             }
             break;
 
-            default: break; //return 0;
+            default: break;
         }
-
-        //return 0;
     }
 
     virtual protected int BulletsStuff(int bulNum)
