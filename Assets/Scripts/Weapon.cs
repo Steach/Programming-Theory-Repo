@@ -18,7 +18,12 @@ public class Weapon : Inventory
     [SerializeField] protected Transform firePosition;
     [SerializeField] protected TextMeshProUGUI reloadingText;
     [SerializeField] protected ParticleSystem shootExplosion;
+    private int bullets;
     
+    void Update()
+    {
+        
+    }
 
     virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle)
     {
@@ -31,7 +36,8 @@ public class Weapon : Inventory
         if (Input.GetKeyDown(KeyCode.R))
         {
             int ammoCapacity = clipCap - currentClipCapacity;
-            int bullets = BulletsStuff(weaponID);
+            bullets = BulletsStuff(weaponID);
+            Debug.Log("Weapor: " + bullets);
 
             if (bullets > ammoCapacity)
             {
@@ -46,7 +52,7 @@ public class Weapon : Inventory
                 ammoCapacity = 0;
             }
         }
-        return currentClipCapacity;        
+        return currentClipCapacity;
     }
 
     virtual protected string RealodingText(int currentClipCapacity)

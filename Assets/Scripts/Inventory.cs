@@ -5,13 +5,26 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    protected int assaultBullets = 60;
-    protected int sniperBullets = 30;
-    protected int handgunBullets = 32;
+    protected int assaultBullets {get; private set;}
+    protected int sniperBullets {get; private set;}
+    protected int handgunBullets {get; private set;}
     private EBulletsNum currentBulNum;
     [SerializeField] protected TextMeshProUGUI bulletText;
+
+    void Awake()
+    {
+        assaultBullets = 60;
+        sniperBullets = 30;
+        handgunBullets = 32;
+    }
     
-    virtual protected void BulletsStuff(int bulNum, int clips)
+    protected void DebugMethod()
+    {
+        assaultBullets += 120;
+        Debug.Log("Debug Inventory: " + assaultBullets);
+    }
+
+    protected void BulletsStuff(int bulNum, int clips)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
 
@@ -48,7 +61,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    virtual protected int BulletsStuff(int bulNum)
+    protected int BulletsStuff(int bulNum)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
 
@@ -56,36 +69,23 @@ public class Inventory : MonoBehaviour
         {
             case EBulletsNum.assault:
             {
-                if(assaultBullets > 0)
-                {
-                    return assaultBullets;
-                }
+                Debug.Log("Invetory: " + assaultBullets);
+                return assaultBullets;
             }
-            break;
 
             case EBulletsNum.sniper:
             {
-                if(sniperBullets > 0)
-                {
-                    return sniperBullets;
-                }
+                return sniperBullets;
             }
-            break;
 
             case EBulletsNum.handgun:
             {
-                if(handgunBullets > 0)
-                {
-                    return handgunBullets;
-                }
+                return handgunBullets;
             }
-            break;
-
             default: return 0;
         }
-
-        return 0;
     }
+
 }
 
 public enum EBulletsNum

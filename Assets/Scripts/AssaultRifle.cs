@@ -19,8 +19,8 @@ public class AssaultRifle : Weapon
         kickbacklForce = 3;
         damagePoint = 7;
         bulletSpeed = 10;
-        assaultBullets = assaultBullets - clipCapacity;
-        bulletText.text = "Bullets: " + clipCapacity + "/" + assaultBullets;
+        //assaultBullets = assaultBullets - clipCapacity;
+        reloadingText.text = RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;  
         shootExplosion.Stop();      
     }
