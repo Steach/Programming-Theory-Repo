@@ -5,17 +5,51 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
+    private static Inventory instance;
     protected int assaultBullets {get; private set;}
     protected int sniperBullets {get; private set;}
     protected int handgunBullets {get; private set;}
     private EBulletsNum currentBulNum;
     [SerializeField] protected TextMeshProUGUI bulletText;
 
+    public static Inventory Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Inventory>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    instance = obj.AddComponent<Inventory>();
+                }
+            }
+            return instance;
+        }
+    }
+
+    public int AssaultBullets
+    {
+        get {return assaultBullets; }
+        set {assaultBullets = value; }
+    }
+
     void Awake()
     {
         assaultBullets = 60;
         sniperBullets = 30;
         handgunBullets = 32;
+
+        /*if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);*/
     }
     
     protected void DebugMethod()

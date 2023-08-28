@@ -12,7 +12,8 @@ public class LootSys : Inventory
     {
         if (other.gameObject.CompareTag("AmmoBox"))
         {
-            DebugMethod();
+            //DebugMethod();
+            Inventory.Instance.AssaultBullets += 120;
             Debug.Log("LootSys: " + assaultBullets);
         }
     }

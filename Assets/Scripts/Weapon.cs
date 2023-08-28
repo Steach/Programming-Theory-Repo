@@ -36,7 +36,8 @@ public class Weapon : Inventory
         if (Input.GetKeyDown(KeyCode.R))
         {
             int ammoCapacity = clipCap - currentClipCapacity;
-            bullets = BulletsStuff(weaponID);
+            //bullets = BulletsStuff(weaponID);
+            bullets = Inventory.Instance.AssaultBullets;
             Debug.Log("Weapor: " + bullets);
 
             if (bullets > ammoCapacity)
