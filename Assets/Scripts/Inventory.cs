@@ -5,11 +5,11 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    protected int assaultBullets {get; private set;}
+    private int assaultBullets; // {get; private set;}
     protected int sniperBullets {get; private set;}
     protected int handgunBullets {get; private set;}
     private EBulletsNum currentBulNum;
-    [SerializeField] protected TextMeshProUGUI bulletText;
+    //[SerializeField] protected TextMeshProUGUI bulletText;
 
     void Awake()
     {
@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("Debug Inventory: " + assaultBullets);
     }
 
-    protected void BulletsStuff(int bulNum, int clips)
+    public void BulletsStuff(int bulNum, int clips)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
 
@@ -61,10 +61,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    protected int BulletsStuff(int bulNum)
+    public int BulletsStuff(int bulNum)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
-
+        Debug.Log("Inventory Get bullets");
         switch(commingBullet)
         {
             case EBulletsNum.assault:

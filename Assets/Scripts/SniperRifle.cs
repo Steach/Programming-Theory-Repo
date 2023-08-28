@@ -8,7 +8,7 @@ public class SniperRifle : Weapon
     // Start is called before the first frame update
     void Start()
     {
-        clipCapacity = 5;
+        //clipCapacity = 5;
         shotsPerMin = 1;
         reloadTime = 2;
         kickbacklForce = 10;

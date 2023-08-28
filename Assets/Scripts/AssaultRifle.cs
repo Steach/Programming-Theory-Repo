@@ -9,6 +9,7 @@ public class AssaultRifle : Weapon
     private float fireRatePS = 11.6f;
     private int weaponIndex = 0;
     private int currentClipCapacity;
+    private int clipCapacity;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,6 @@ public class AssaultRifle : Weapon
         kickbacklForce = 3;
         damagePoint = 7;
         bulletSpeed = 10;
-        //assaultBullets = assaultBullets - clipCapacity;
         reloadingText.text = RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;  
         shootExplosion.Stop();      
@@ -30,7 +30,7 @@ public class AssaultRifle : Weapon
     {
         reloadingText.text = RealodingText(currentClipCapacity);
 
-        bulletText.text = "Bullets: " + currentClipCapacity + "/" + assaultBullets;
+        bulletText.text = "Bullets: " + currentClipCapacity + "/" + bullets;
         fireTimeout += Time.deltaTime;
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
         {

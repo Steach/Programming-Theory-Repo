@@ -5,9 +5,9 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 
-public class Weapon : Inventory
+public class Weapon : MonoBehaviour
 {
-    protected int clipCapacity;
+    //protected int clipCapacity;
     protected int shotsPerMin;
     protected float reloadTime;
     protected float kickbacklForce;
@@ -18,7 +18,20 @@ public class Weapon : Inventory
     [SerializeField] protected Transform firePosition;
     [SerializeField] protected TextMeshProUGUI reloadingText;
     [SerializeField] protected ParticleSystem shootExplosion;
-    private int bullets;
+    [SerializeField] protected TextMeshProUGUI bulletText;
+    protected int bullets;
+    private Inventory inventory;
+
+    void Awake()
+    {
+        //inventory = GetComponent<Inventory>();
+    }
+
+    void Start()
+    {
+        inventory = GetComponent<Inventory>();
+        bullets = inventory.BulletsStuff(0);
+    }
     
     void Update()
     {
@@ -36,19 +49,19 @@ public class Weapon : Inventory
         if (Input.GetKeyDown(KeyCode.R))
         {
             int ammoCapacity = clipCap - currentClipCapacity;
-            bullets = BulletsStuff(weaponID);
+            bullets = inventory.BulletsStuff(weaponID);
             Debug.Log("Weapor: " + bullets);
 
             if (bullets > ammoCapacity)
             {
                 currentClipCapacity += ammoCapacity;
-                BulletsStuff(weaponID, ammoCapacity);
+                inventory.BulletsStuff(weaponID, ammoCapacity);
                 ammoCapacity = 0;
             }
             else if (bullets <= ammoCapacity)
             {
                 currentClipCapacity += bullets;
-                BulletsStuff(weaponID, bullets);
+                inventory.BulletsStuff(weaponID, bullets);
                 ammoCapacity = 0;
             }
         }
