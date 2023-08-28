@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootSys : Inventory
+public class LootSys : MonoBehaviour
 {
+    private Inventory inventory;
     void Start()
     {
-        //Debug.Log("Start LootSys: " + assaultBullets);
+        inventory = GameObject.Find("InventorySystem").GetComponent<Inventory>();
     }
     void OnTriggerEnter (Collider other)
     {
         if (other.gameObject.CompareTag("AmmoBox"))
         {
-            DebugMethod();
-            //Debug.Log("LootSys: " + assaultBullets);
+            inventory.DebugMethod();
         }
     }
 }

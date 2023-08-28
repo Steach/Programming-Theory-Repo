@@ -9,7 +9,6 @@ public class Inventory : MonoBehaviour
     protected int sniperBullets {get; private set;}
     protected int handgunBullets {get; private set;}
     private EBulletsNum currentBulNum;
-    //[SerializeField] protected TextMeshProUGUI bulletText;
 
     void Awake()
     {
@@ -18,10 +17,9 @@ public class Inventory : MonoBehaviour
         handgunBullets = 32;
     }
     
-    protected void DebugMethod()
+    public void DebugMethod()
     {
         assaultBullets += 120;
-        Debug.Log("Debug Inventory: " + assaultBullets);
     }
 
     public void BulletsStuff(int bulNum, int clips)
@@ -64,12 +62,10 @@ public class Inventory : MonoBehaviour
     public int BulletsStuff(int bulNum)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
-        Debug.Log("Inventory Get bullets");
         switch(commingBullet)
         {
             case EBulletsNum.assault:
             {
-                Debug.Log("Invetory: " + assaultBullets);
                 return assaultBullets;
             }
 

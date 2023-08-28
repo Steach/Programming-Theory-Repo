@@ -20,23 +20,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected ParticleSystem shootExplosion;
     [SerializeField] protected TextMeshProUGUI bulletText;
     protected int bullets;
-    private Inventory inventory;
-
-    void Awake()
-    {
-        //inventory = GetComponent<Inventory>();
-    }
-
-    void Start()
-    {
-        inventory = GetComponent<Inventory>();
-        bullets = inventory.BulletsStuff(0);
-    }
-    
-    void Update()
-    {
-        
-    }
+    protected Inventory inventory;
 
     virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle)
     {
@@ -46,12 +30,10 @@ public class Weapon : MonoBehaviour
 
     virtual protected int Reload(int currentClipCapacity, int clipCap, int weaponID)
     {
+        int ammoCapacity = clipCap - currentClipCapacity;
+        bullets = inventory.BulletsStuff(weaponID);
         if (Input.GetKeyDown(KeyCode.R))
         {
-            int ammoCapacity = clipCap - currentClipCapacity;
-            bullets = inventory.BulletsStuff(weaponID);
-            Debug.Log("Weapor: " + bullets);
-
             if (bullets > ammoCapacity)
             {
                 currentClipCapacity += ammoCapacity;
@@ -68,15 +50,20 @@ public class Weapon : MonoBehaviour
         return currentClipCapacity;
     }
 
-    virtual protected string RealodingText(int currentClipCapacity)
+    virtual protected void RealodingText(int currentClipCapacity)
     {
         if (currentClipCapacity > 0)
         {
-            return "";      
+            reloadingText.text = "";      
         }
         else
         {
-            return "No ammo. Need to reload.";
+            reloadingText.text = "No ammo. Need to reload.";
         }
+    }
+
+    virtual protected void AmmoText(int currentClipCapacity)
+    {
+        bulletText.text = "Bullets: " + currentClipCapacity + "/" + bullets;
     }
 }

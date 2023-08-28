@@ -20,17 +20,17 @@ public class AssaultRifle : Weapon
         kickbacklForce = 3;
         damagePoint = 7;
         bulletSpeed = 10;
-        reloadingText.text = RealodingText(currentClipCapacity);
+        RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;  
-        shootExplosion.Stop();      
+        shootExplosion.Stop();  
+        inventory = GameObject.Find("InventorySystem").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        reloadingText.text = RealodingText(currentClipCapacity);
-
-        bulletText.text = "Bullets: " + currentClipCapacity + "/" + bullets;
+        RealodingText(currentClipCapacity);
+        AmmoText(currentClipCapacity);
         fireTimeout += Time.deltaTime;
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
         {

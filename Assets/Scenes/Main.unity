@@ -704,7 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 642692bc9168f434090080a616e6b19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletText: {fileID: 0}
 --- !u!54 &259510882
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -849,7 +848,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dae01cc698193446af0a34b676ba55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletText: {fileID: 0}
 --- !u!4 &416151827
 Transform:
   m_ObjectHideFlags: 0
@@ -877,11 +875,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f323f836693c74cbf2d4b74be841d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletText: {fileID: 0}
   bulletPrefab: {fileID: 0}
   firePosition: {fileID: 0}
   reloadingText: {fileID: 0}
   shootExplosion: {fileID: 0}
+  bulletText: {fileID: 203385006}
 --- !u!1 &551895497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2194,11 +2192,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1774da73f45164cb5715b8885289a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletText: {fileID: 203385006}
   bulletPrefab: {fileID: 5341742223406746680, guid: 9c3cddd6060b7cc4eadfb9cefcf6e7db, type: 3}
   firePosition: {fileID: 708169846}
   reloadingText: {fileID: 178283504}
   shootExplosion: {fileID: 2147328917}
+  bulletText: {fileID: 203385006}
 --- !u!4 &2147328915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4300533007854612, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
