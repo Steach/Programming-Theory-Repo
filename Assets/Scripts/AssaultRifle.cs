@@ -30,6 +30,12 @@ public class AssaultRifle : Weapon
         reloadingText.text = RealodingText(currentClipCapacity);
         bulletText.text = AmmoText(currentClipCapacity, weaponIndex);
         fireTimeout += Time.deltaTime;
+        AssaultShoot();
+        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
+    }
+
+    private void AssaultShoot()
+    {
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
         {
             Shoot(bulletPrefab, firePosition, shootExplosion);
@@ -40,6 +46,5 @@ public class AssaultRifle : Weapon
         {
             shootExplosion.Stop();
         }
-        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
     }
 }
