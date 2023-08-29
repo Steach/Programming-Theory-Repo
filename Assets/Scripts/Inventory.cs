@@ -6,11 +6,10 @@ using TMPro;
 public class Inventory : MonoBehaviour
 {
     private static Inventory instance;
-    protected int assaultBullets {get; private set;}
-    protected int sniperBullets {get; private set;}
-    protected int handgunBullets {get; private set;}
+    private int assaultBullets;
+    private int sniperBullets;
+    private int handgunBullets;
     private EBulletsNum currentBulNum;
-    [SerializeField] protected TextMeshProUGUI bulletText;
 
     public static Inventory Instance
     {
@@ -29,10 +28,22 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public int AssaultBullets
+    private int AssaultBullets
     {
         get {return assaultBullets; }
         set {assaultBullets = value; }
+    }
+
+    private int SniperBullets
+    {
+        get {return sniperBullets; }
+        set {sniperBullets = value; }
+    }
+
+    private int HandgunBullets
+    {
+        get {return handgunBullets; }
+        set {handgunBullets = value; }
     }
 
     void Awake()
@@ -54,8 +65,7 @@ public class Inventory : MonoBehaviour
     
     protected void DebugMethod()
     {
-        assaultBullets += 120;
-        Debug.Log("Debug Inventory: " + assaultBullets);
+        AssaultBullets += 120;
     }
 
     protected void BulletsStuff(int bulNum, int clips)
@@ -66,27 +76,30 @@ public class Inventory : MonoBehaviour
         {
             case EBulletsNum.assault:
             {
-                if(assaultBullets > 0)
+                int bullets = Inventory.Instance.AssaultBullets;
+                if(bullets > 0)
                 {
-                    assaultBullets -= clips;
+                    Inventory.Instance.AssaultBullets -= clips;
                 }
             }
             break;
 
             case EBulletsNum.sniper:
             {
-                if(sniperBullets > 0)
+                int bullets = Inventory.Instance.SniperBullets;
+                if(bullets > 0)
                 {
-                    sniperBullets -= clips;
+                    Inventory.Instance.SniperBullets -= clips;
                 }
             }
             break;
 
             case EBulletsNum.handgun:
             {
-                if(handgunBullets > 0)
+                int bullets = Inventory.Instance.HandgunBullets;
+                if(bullets > 0)
                 {
-                    handgunBullets -= clips;
+                    Inventory.Instance.HandgunBullets -= clips;
                 }
             }
             break;
@@ -103,18 +116,20 @@ public class Inventory : MonoBehaviour
         {
             case EBulletsNum.assault:
             {
-                Debug.Log("Invetory: " + assaultBullets);
-                return assaultBullets;
+                int bullets = Inventory.Instance.AssaultBullets;
+                return bullets;
             }
 
             case EBulletsNum.sniper:
             {
-                return sniperBullets;
+                int bullets = Inventory.Instance.SniperBullets;
+                return bullets;
             }
 
             case EBulletsNum.handgun:
             {
-                return handgunBullets;
+                int bullets = Inventory.Instance.HandgunBullets;
+                return bullets;
             }
             default: return 0;
         }

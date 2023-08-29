@@ -18,6 +18,7 @@ public class Weapon : Inventory
     [SerializeField] protected Transform firePosition;
     [SerializeField] protected TextMeshProUGUI reloadingText;
     [SerializeField] protected ParticleSystem shootExplosion;
+    [SerializeField] protected TextMeshProUGUI bulletText;
     private int bullets;
     
     void Update()
@@ -36,9 +37,7 @@ public class Weapon : Inventory
         if (Input.GetKeyDown(KeyCode.R))
         {
             int ammoCapacity = clipCap - currentClipCapacity;
-            //bullets = BulletsStuff(weaponID);
-            bullets = Inventory.Instance.AssaultBullets;
-            Debug.Log("Weapor: " + bullets);
+            bullets = BulletsStuff(weaponID);
 
             if (bullets > ammoCapacity)
             {
@@ -67,4 +66,11 @@ public class Weapon : Inventory
             return "No ammo. Need to reload.";
         }
     }
+
+    virtual protected string AmmoText(int currentClipCapacity, int weaponID)
+    {
+        string bulletsStr = "Bullets: " + currentClipCapacity + "/" + BulletsStuff(weaponID);
+        return bulletsStr;
+    }
+
 }

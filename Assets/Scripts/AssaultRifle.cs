@@ -19,9 +19,8 @@ public class AssaultRifle : Weapon
         kickbacklForce = 3;
         damagePoint = 7;
         bulletSpeed = 10;
-        //assaultBullets = assaultBullets - clipCapacity;
-        reloadingText.text = RealodingText(currentClipCapacity);
-        currentClipCapacity = clipCapacity;  
+        RealodingText(currentClipCapacity);
+        currentClipCapacity = clipCapacity;
         shootExplosion.Stop();      
     }
 
@@ -29,8 +28,7 @@ public class AssaultRifle : Weapon
     void Update()
     {
         reloadingText.text = RealodingText(currentClipCapacity);
-
-        bulletText.text = "Bullets: " + currentClipCapacity + "/" + assaultBullets;
+        bulletText.text = AmmoText(currentClipCapacity, weaponIndex);
         fireTimeout += Time.deltaTime;
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
         {
