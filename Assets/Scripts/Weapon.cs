@@ -13,21 +13,26 @@ public class Weapon : Inventory
     protected float kickbacklForce;
     protected float damagePoint;
     protected float bulletSpeed;
+    protected float recoilForce;
     protected int oneMin = 60;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firePosition;
     [SerializeField] protected TextMeshProUGUI reloadingText;
     [SerializeField] protected ParticleSystem shootExplosion;
     [SerializeField] protected TextMeshProUGUI bulletText;
+    protected Recoil recoil;
     private int bullets;
+    
     
     void Update()
     {
         
     }
 
-    virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle)
+    virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle, float recoilF)
     {
+        recoil = GameObject.Find("Head").GetComponent<Recoil>();
+        recoil.Recoiling(recoilF);
         GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
         shootPrticle.Play();
     }

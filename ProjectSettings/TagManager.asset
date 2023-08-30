@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - AmmoBox
+  - TargetHead
+  - TargetBody
+  - Target
   layers:
   - Default
   - TransparentFX

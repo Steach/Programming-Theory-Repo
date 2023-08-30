@@ -19,6 +19,7 @@ public class AssaultRifle : Weapon
         kickbacklForce = 3;
         damagePoint = 7;
         bulletSpeed = 10;
+        recoilForce = 0.5f;
         RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;
         shootExplosion.Stop();      
@@ -38,7 +39,7 @@ public class AssaultRifle : Weapon
     {
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKey(KeyCode.Mouse0))
         {
-            Shoot(bulletPrefab, firePosition, shootExplosion);
+            Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
         }
