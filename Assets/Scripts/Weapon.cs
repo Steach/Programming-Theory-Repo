@@ -23,7 +23,10 @@ public class Weapon : Inventory
     protected Recoil recoil;
     private int bullets;
     
-    
+    void Start()
+    {
+        //recoil = GameObject.Find("Head").GetComponent<Recoil>();
+    }
     void Update()
     {
         
