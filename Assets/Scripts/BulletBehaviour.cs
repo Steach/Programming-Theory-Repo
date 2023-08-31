@@ -6,11 +6,13 @@ public class BulletBehaviour : AssaultRifle
 {
     private float lifeTime;
     private Rigidbody bulletrb;
+    private Vector3 previuslyPosition;
+    private GameObject target = null;
     // Start is called before the first frame update
     void Start()
     {
         lifeTime = 0;
-        bulletSpeed = 0.1f;
+        bulletSpeed = 0.5f;
         bulletrb = GetComponent<Rigidbody>();
     }
 
@@ -21,19 +23,28 @@ public class BulletBehaviour : AssaultRifle
         lifeTime += Time.deltaTime;
         //transform.Translate(Vector3.left * bulletSpeed * Time.deltaTime);
         bulletrb.AddForce(bulletDirection * bulletSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
-        Debug.DrawLine(transform.position, (transform.position + bulletDirection) * 100, Color.red);
+        //Debug.DrawLine(transform.position, (transform.position + bulletDirection) * 100, Color.red);
 
         RaycastHit hit;
         if (Physics.Raycast(transform.position, bulletDirection, out hit, 1000))
         {
             if (hit.collider != null & hit.collider.CompareTag("TargetBody"))
             {
-                // Обробка попадання в ціль
+                if (target == null)
+                {
+                    target = hit.collider.gameObject;
+                }
+                Debug.Log("Bullet see target");
+            }
+            
+            else if (target != null)
+            {
                 Debug.Log("Bullet hit the target!");
                 Destroy(gameObject);
             }
         }
-
+        
+        previuslyPosition = transform.position;
         //BulletDeath();
     }
 
