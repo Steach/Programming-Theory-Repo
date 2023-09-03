@@ -50,8 +50,8 @@ public class BulletBehaviour : AssaultRifle
         {
             if (hit.collider.CompareTag("TargetBody"))
             {
-                
                 Debug.Log("Bullet hit the target");
+                Destroy(gameObject);
             }
             
             
