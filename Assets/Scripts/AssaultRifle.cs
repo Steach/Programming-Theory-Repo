@@ -7,7 +7,7 @@ public class AssaultRifle : Weapon
     private Vector3 offsetForePos;
     private float fireTimeout;
     private float fireRatePS = 11.6f;
-    private int weaponIndex = 0;
+    protected int weaponIndex = 0;
     private int currentClipCapacity;
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,6 @@ public class AssaultRifle : Weapon
         reloadTime = 2;
         kickbacklForce = 3;
         damagePoint = 7;
-        bulletSpeed = 10;
         recoilForce = 0.5f;
         RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;
@@ -47,5 +46,10 @@ public class AssaultRifle : Weapon
         {
             shootExplosion.Stop();
         }
+    }
+
+    public int GetWeapIndex()
+    {
+        return weaponIndex;
     }
 }

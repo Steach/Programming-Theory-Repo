@@ -1,17 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class BulletBehaviour : AssaultRifle
+public class BulletBehaviour : MonoBehaviour
 {
     private float lifeTime;
     private Rigidbody bulletrb;
     private Vector3 currentPosition;
     private Vector3 previuslyPosition;
-    private GameObject target = null;
+    //private GameObject target = null;
+    private float damage;
+    private Enemy enemy;
+    private int enemiesCount;
+    private float bulletSpeed;
+    private int weaponIndex;
+    
     // Start is called before the first frame update
     void Start()
     {
+        FindEnemies();
         previuslyPosition = transform.position;
         lifeTime = 0;
         bulletSpeed = 25f;
@@ -21,6 +29,8 @@ public class BulletBehaviour : AssaultRifle
     // Update is called once per frame
     void Update()
     {
+        FindWeapon();
+        FindEnemies();
         VarificationShoot();
         BulletDeath();
     }
@@ -48,15 +58,69 @@ public class BulletBehaviour : AssaultRifle
         RaycastHit hit;
         if (Physics.Raycast(currentPosition, direction, out hit, distence))
         {
-            if (hit.collider.CompareTag("TargetBody"))
+            if (enemiesCount > 0 && hit.collider.CompareTag("TargetBody"))
             {
-                Debug.Log("Bullet hit the target: " + damagePoint);
+                Debug.Log("Bullet hit the target: " + damage);
+                enemy.ShootEnemy(damage);
                 Destroy(gameObject);
             }
-            
         }
         
         previuslyPosition = currentPosition;
+    }
+
+    void DamagePoint(int index)
+    {
+        EBulletsNum weaponIndx = (EBulletsNum) index;
+        
+        switch(weaponIndx)
+        {
+            case EBulletsNum.assault:
+            {
+                damage = 7;
+            }
+            break;
+
+            case EBulletsNum.sniper:
+            {
+                damage = 30;
+            }
+            break;
+
+            case EBulletsNum.handgun:
+            {
+                damage = 5;
+            }
+            break;
+
+            default: damage = 0; break;
+        }
+        
+    }
+
+    private void FindEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("TargetBody");
+        enemiesCount = enemies.Length;
+        if (enemiesCount > 0)
+        {  
+            enemy = GameObject.Find("Target").GetComponent<Enemy>();
+        }
+    }
+
+    private void FindWeapon()
+    {
+        GameObject[] weapons = GameObject.FindGameObjectsWithTag("Weapon");
+        int weaponCount = weapons.Length;
+        if (weaponCount > 0)
+        {
+            AssaultRifle assaultRifleScript = weapons[0].GetComponent<AssaultRifle>();
+            if (assaultRifleScript != null)
+            {
+                weaponIndex = 0;
+                DamagePoint(weaponIndex);
+            }
+        }
     }
 }
 
