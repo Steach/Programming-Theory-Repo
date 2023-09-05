@@ -8,6 +8,7 @@ TagManager:
   - TargetHead
   - TargetBody
   - Target
+  - Weapon
   layers:
   - Default
   - TransparentFX
