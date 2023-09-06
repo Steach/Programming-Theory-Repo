@@ -120,6 +120,20 @@ public class BulletBehaviour : MonoBehaviour
                 weaponIndex = 0;
                 DamagePoint(weaponIndex);
             }
+
+            SniperRifle SniperRifleScript = weapons[0].GetComponent<SniperRifle>();
+            if (SniperRifleScript != null)
+            {
+                weaponIndex = 1;
+                DamagePoint(weaponIndex);
+            }
+
+            HandGun handGunScript = weapons[0].GetComponent<HandGun>();
+            if (handGunScript != null)
+            {
+                weaponIndex = 2;
+                DamagePoint(weaponIndex);
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ public class Moving : MonoBehaviour
     [SerializeField] private float strayfSpeed;
     [SerializeField] private float turnSpeed;
     // Start is called before the first frame update
+
     void Start()
     {
         

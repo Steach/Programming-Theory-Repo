@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Inventory : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Inventory : MonoBehaviour
     private int sniperBullets;
     private int handgunBullets;
     private EBulletsNum currentBulNum;
+    public static int invInstance;
 
     public static Inventory Instance
     {
@@ -48,24 +50,35 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        assaultBullets = 60;
-        sniperBullets = 30;
-        handgunBullets = 32;
+        AssaultBullets = 60;
+        SniperBullets = 30;
+        HandgunBullets = 32;
+        invInstance++;
+        Debug.Log("invInstance: " + invInstance);
 
-        /*if (instance == null)
+        if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);*/
+    }
+
+    private void OnDestroy() 
+    {
+        invInstance--;
+        Debug.Log("OnDestroy invInstance: " + invInstance);
     }
     
     protected void DebugMethod()
     {
         AssaultBullets += 120;
+        SniperBullets += 30;
+        HandgunBullets += 32;
+        Debug.Log("Bullets++: " + AssaultBullets + " " + SniperBullets + " " + HandgunBullets);
     }
 
     protected void BulletsStuff(int bulNum, int clips)
