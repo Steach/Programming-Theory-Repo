@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("OnDestroy invInstance: " + invInstance);
     }
     
-    protected void DebugMethod()
+    public void DebugMethod()
     {
         AssaultBullets += 120;
         SniperBullets += 30;
@@ -81,7 +81,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("Bullets++: " + AssaultBullets + " " + SniperBullets + " " + HandgunBullets);
     }
 
-    protected void BulletsStuff(int bulNum, int clips)
+    public void BulletsStuff(int bulNum, int clips)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
 
@@ -121,7 +121,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    protected int BulletsStuff(int bulNum)
+    public int BulletsStuff(int bulNum)
     {
         EBulletsNum commingBullet = (EBulletsNum) bulNum;
 

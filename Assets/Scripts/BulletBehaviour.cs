@@ -83,7 +83,7 @@ public class BulletBehaviour : MonoBehaviour
 
             case EBulletsNum.sniper:
             {
-                damage = 30;
+                damage = 75;
             }
             break;
 

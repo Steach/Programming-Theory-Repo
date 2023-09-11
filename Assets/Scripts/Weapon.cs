@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 
-public class Weapon : Inventory
+public class Weapon : MonoBehaviour
 {
     protected int clipCapacity;
     protected int shotsPerMin;
@@ -22,10 +22,11 @@ public class Weapon : Inventory
     [SerializeField] protected TextMeshProUGUI bulletText;
     protected Recoil recoil;
     private int bullets;
+    private Inventory inventory;
     
-    void Start()
+    void Awake()
     {
-        //recoil = GameObject.Find("Head").GetComponent<Recoil>();
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
     }
     void Update()
     {
@@ -45,18 +46,18 @@ public class Weapon : Inventory
         if (Input.GetKeyDown(KeyCode.R))
         {
             int ammoCapacity = clipCap - currentClipCapacity;
-            bullets = BulletsStuff(weaponID);
+            bullets = inventory.BulletsStuff(weaponID);
 
             if (bullets > ammoCapacity)
             {
                 currentClipCapacity += ammoCapacity;
-                BulletsStuff(weaponID, ammoCapacity);
+                inventory.BulletsStuff(weaponID, ammoCapacity);
                 ammoCapacity = 0;
             }
             else if (bullets <= ammoCapacity)
             {
                 currentClipCapacity += bullets;
-                BulletsStuff(weaponID, bullets);
+                inventory.BulletsStuff(weaponID, bullets);
                 ammoCapacity = 0;
             }
         }
@@ -77,7 +78,7 @@ public class Weapon : Inventory
 
     virtual protected string AmmoText(int currentClipCapacity, int weaponID)
     {
-        string bulletsStr = "Bullets: " + currentClipCapacity + "/" + BulletsStuff(weaponID);
+        string bulletsStr = "Bullets: " + currentClipCapacity + "/" + inventory.BulletsStuff(weaponID);
         return bulletsStr;
     }
 

@@ -21,7 +21,7 @@ public class AssaultRifle : Weapon
         recoilForce = 0.5f;
         RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;
-        shootExplosion.Stop();      
+        shootExplosion.Stop();
     }
 
     // Update is called once per frame
