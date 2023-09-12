@@ -14,6 +14,7 @@ public class LootSys : MonoBehaviour
     {
         if (other.gameObject.CompareTag("AmmoBox"))
         {
+            Destroy(other.gameObject);
             inventory.DebugMethod();
         }
     }

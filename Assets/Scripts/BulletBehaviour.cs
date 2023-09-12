@@ -20,6 +20,7 @@ public class BulletBehaviour : MonoBehaviour
     void Start()
     {
         FindEnemies();
+        FindWeapon();
         previuslyPosition = transform.position;
         lifeTime = 0;
         bulletSpeed = 25f;
@@ -29,7 +30,6 @@ public class BulletBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindWeapon();
         FindEnemies();
         VarificationShoot();
         BulletDeath();
@@ -104,7 +104,7 @@ public class BulletBehaviour : MonoBehaviour
         enemiesCount = enemies.Length;
         if (enemiesCount > 0)
         {  
-            enemy = GameObject.Find("Target").GetComponent<Enemy>();
+            enemy = GameObject.Find("Target(Clone)").GetComponent<Enemy>();
         }
     }
 

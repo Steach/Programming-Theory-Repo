@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private GameObject loot;
+    private Vector3 currentPosition;
     private float health = 100;
     // Start is called before the first frame update
     void Start()
@@ -18,8 +20,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentPosition = transform.position;
         if (health <= 0)
         {
+            Instantiate(loot, currentPosition, transform.rotation);
             Destroy(gameObject);
         }
     }

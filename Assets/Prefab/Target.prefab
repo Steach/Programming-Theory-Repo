@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 6877787591795902239}
+  loot: {fileID: 2110353084131987388, guid: 8315417ed250e83408ce050944d4b07e, type: 3}
 --- !u!1 &2501594236525088342
 GameObject:
   m_ObjectHideFlags: 0
