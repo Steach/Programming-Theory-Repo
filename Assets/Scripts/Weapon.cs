@@ -36,8 +36,8 @@ public class Weapon : MonoBehaviour
     virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle, float recoilF)
     {
         recoil = GameObject.Find("Head").GetComponent<Recoil>();
-        recoil.Recoiling(recoilF);
         GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
+        recoil.Recoiling(recoilF);
         shootPrticle.Play();
     }
 

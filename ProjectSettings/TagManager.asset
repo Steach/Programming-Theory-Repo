@@ -9,6 +9,7 @@ TagManager:
   - TargetBody
   - Target
   - Weapon
+  - Ground
   layers:
   - Default
   - TransparentFX
