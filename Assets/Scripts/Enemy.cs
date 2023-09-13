@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject loot;
     private Vector3 currentPosition;
     private float health = 100;
+    private bool playerInTarget = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,12 @@ public class Enemy : MonoBehaviour
             Instantiate(loot, currentPosition, transform.rotation);
             Destroy(gameObject);
         }
+        if (playerInTarget)
+        {
+            GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
+            Transform targetPlayer = playersObj[0].GetComponent<Transform>();
+            transform.LookAt(targetPlayer);
+        }
     }
 
     public void ShootEnemy(float damage)
@@ -35,6 +42,22 @@ public class Enemy : MonoBehaviour
             health -= damage;
             healthSlider.value = health;
             Debug.Log("Health: " + health);
+        }
+    }
+
+    private void OnTriggerEnter (Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            playerInTarget = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            playerInTarget = false;
         }
     }
 }

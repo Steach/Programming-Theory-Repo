@@ -33,7 +33,6 @@ public class Moving : MonoBehaviour
         Jump();
         Sit();
         stamina = player.GetStamina();
-        Debug.Log("Stamina: " + stamina);
     }
 
     void Movement(int acceleration)
@@ -79,7 +78,6 @@ public class Moving : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("On the ground!");
             onTheGround = true;
         }
     }
