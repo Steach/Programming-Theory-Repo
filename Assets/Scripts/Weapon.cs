@@ -20,9 +20,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI reloadingText;
     [SerializeField] protected ParticleSystem shootExplosion;
     [SerializeField] protected TextMeshProUGUI bulletText;
+    [SerializeField] protected Transform aimPosition;
+    [SerializeField] protected Transform defaultPosition;
     protected Recoil recoil;
     private int bullets;
     private Inventory inventory;
+    protected Vector3 currentPos;
+    protected bool aiming;
     
     void Awake()
     {
@@ -82,4 +86,8 @@ public class Weapon : MonoBehaviour
         return bulletsStr;
     }
 
+    virtual protected void AimPosition(GameObject weapon)
+    {
+        weapon.transform.position = new Vector3(aimPosition.transform.position.x, aimPosition.transform.position.y, aimPosition.transform.position.z);
+    }
 }

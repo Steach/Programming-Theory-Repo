@@ -77,7 +77,7 @@ public class BulletBehaviour : MonoBehaviour
         {
             case EBulletsNum.assault:
             {
-                damage = 13;
+                damage = 29;
             }
             break;
 
@@ -89,7 +89,7 @@ public class BulletBehaviour : MonoBehaviour
 
             case EBulletsNum.handgun:
             {
-                damage = 9;
+                damage = 21;
             }
             break;
 

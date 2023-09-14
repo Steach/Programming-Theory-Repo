@@ -12,6 +12,7 @@ public class AssaultRifle : Weapon
     // Start is called before the first frame update
     void Start()
     {
+        aiming = false;
         fireTimeout = 0;
         clipCapacity = 20;
         shotsPerMin = 1;
@@ -27,6 +28,7 @@ public class AssaultRifle : Weapon
     // Update is called once per frame
     void Update()
     {
+        AimPos();
         reloadingText.text = RealodingText(currentClipCapacity);
         bulletText.text = AmmoText(currentClipCapacity, weaponIndex);
         fireTimeout += Time.deltaTime;
@@ -51,5 +53,19 @@ public class AssaultRifle : Weapon
     public int GetWeapIndex()
     {
         return weaponIndex;
+    }
+
+    private void AimPos()
+    {
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            AimPosition(gameObject);
+            aiming = true;
+        }
+        else
+        {
+            gameObject.transform.position = defaultPosition.position;
+            aiming = false;
+        }
     }
 }

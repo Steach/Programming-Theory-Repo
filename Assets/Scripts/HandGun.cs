@@ -27,6 +27,7 @@ public class HandGun : Weapon
     // Update is called once per frame
     void Update()
     {
+        AimPos();
         reloadingText.text = RealodingText(currentClipCapacity);
         bulletText.text = AmmoText(currentClipCapacity, weaponIndex);
         fireTimeout += Time.deltaTime;
@@ -51,5 +52,19 @@ public class HandGun : Weapon
     public int GetWeapIndex()
     {
         return weaponIndex;
+    }
+
+    private void AimPos()
+    {
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            AimPosition(gameObject);
+            aiming = true;
+        }
+        else
+        {
+            gameObject.transform.position = defaultPosition.position;
+            aiming = false;
+        }
     }
 }
