@@ -21,13 +21,17 @@ public class SniperRifle : Weapon
         fireTimeout = 0;
         clipCapacity = 5;
         shotsPerMin = 1;
-        reloadTime = 2;
+        reloadTime = 3;
         kickbacklForce = 3;
         damagePoint = 75;
         recoilForce = 2f;
         RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;
         shootExplosion.Stop();
+        reloadSlider.maxValue = reloadTime;
+        reloadSlider.value = reloadTime;
+        reloadSlider.gameObject.SetActive(false);
+        reloadable = Reloadable(currentClipCapacity, clipCapacity, weaponIndex, reloadSlider.value, reloadTime);
     }
 
     // Update is called once per frame
@@ -36,14 +40,16 @@ public class SniperRifle : Weapon
         AimPos();
         reloadingText.text = RealodingText(currentClipCapacity);
         bulletText.text = AmmoText(currentClipCapacity, weaponIndex);
+        reloadSlider.value = ReloadSliderValue(reloadSlider, reloadSlider.value, reloadTime, reloadable);
         fireTimeout += Time.deltaTime;
         AssaultShoot();
-        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
+        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex, reloadSlider.value);
+        reloadable = Reloadable(currentClipCapacity, clipCapacity, weaponIndex, reloadSlider.value, reloadTime);
     }
 
     private void AssaultShoot()
     {
-        if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKeyDown(KeyCode.Mouse0))
+        if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKeyDown(KeyCode.Mouse0) && reloadSlider.value >= reloadTime)
         {
             Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce);
             currentClipCapacity -= 1;

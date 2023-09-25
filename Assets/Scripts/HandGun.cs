@@ -15,13 +15,17 @@ public class HandGun : Weapon
         fireTimeout = 0;
         clipCapacity = 8;
         shotsPerMin = 1;
-        reloadTime = 2;
+        reloadTime = 1;
         kickbacklForce = 3;
         damagePoint = 5;
         recoilForce = 0.5f;
         RealodingText(currentClipCapacity);
         currentClipCapacity = clipCapacity;
-        shootExplosion.Stop();  
+        shootExplosion.Stop();
+        reloadSlider.maxValue = reloadTime;
+        reloadSlider.value = reloadTime;
+        reloadSlider.gameObject.SetActive(false);
+        reloadable = Reloadable(currentClipCapacity, clipCapacity, weaponIndex, reloadSlider.value, reloadTime);
     }
 
     // Update is called once per frame
@@ -30,14 +34,16 @@ public class HandGun : Weapon
         AimPos();
         reloadingText.text = RealodingText(currentClipCapacity);
         bulletText.text = AmmoText(currentClipCapacity, weaponIndex);
+        reloadSlider.value = ReloadSliderValue(reloadSlider, reloadSlider.value, reloadTime, reloadable);
         fireTimeout += Time.deltaTime;
         AssaultShoot();
-        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex);
+        currentClipCapacity = Reload(currentClipCapacity, clipCapacity, weaponIndex, reloadSlider.value);
+        reloadable = Reloadable(currentClipCapacity, clipCapacity, weaponIndex, reloadSlider.value, reloadTime);
     }
 
     private void AssaultShoot()
     {
-        if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKeyDown(KeyCode.Mouse0))
+        if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKeyDown(KeyCode.Mouse0) && reloadSlider.value >= reloadTime)
         {
             Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce);
             currentClipCapacity -= 1;

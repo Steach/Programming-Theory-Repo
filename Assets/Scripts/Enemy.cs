@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
         }
         if (playerInTarget)
         {
+            Debug.Log("See the player!");
             GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
             Transform targetPlayer = playersObj[0].GetComponent<Transform>();
             transform.LookAt(targetPlayer);
@@ -50,6 +51,7 @@ public class Enemy : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             playerInTarget = true;
+            Debug.Log("See the player!");
         }
     }
 
@@ -58,6 +60,7 @@ public class Enemy : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             playerInTarget = false;
+            Debug.Log("Don`t see the player!");
         }
     }
 }

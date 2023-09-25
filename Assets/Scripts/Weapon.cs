@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
@@ -22,11 +23,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI bulletText;
     [SerializeField] protected Transform aimPosition;
     [SerializeField] protected Transform defaultPosition;
+    [SerializeField] protected Slider reloadSlider;
     protected Recoil recoil;
     private int bullets;
     private Inventory inventory;
     protected Vector3 currentPos;
     protected bool aiming;
+    protected bool reloadable;
     
     void Awake()
     {
@@ -45,8 +48,8 @@ public class Weapon : MonoBehaviour
         shootPrticle.Play();
     }
 
-    virtual protected int Reload(int currentClipCapacity, int clipCap, int weaponID)
-    {
+    virtual protected int Reload(int currentClipCapacity, int clipCap, int weaponID, float relTimeSlider)
+    { 
         if (Input.GetKeyDown(KeyCode.R))
         {
             int ammoCapacity = clipCap - currentClipCapacity;
@@ -78,6 +81,48 @@ public class Weapon : MonoBehaviour
         {
             return "No ammo. Need to reload.";
         }
+    }
+
+    virtual protected float ReloadSliderValue(Slider slider, float relSliderTime, float relTime, bool _reloadable)
+    {
+        if(_reloadable)
+        {
+            if(Input.GetKeyDown(KeyCode.R) || relSliderTime < relTime)
+                {
+                    if (relSliderTime > 0)
+                    {
+                        slider.gameObject.SetActive(true);
+                        relSliderTime -= Time.deltaTime;
+                        return relSliderTime;
+                    }
+                    else 
+                    {
+                        slider.gameObject.SetActive(false);
+                        relSliderTime = relTime;
+                        return relSliderTime;
+                    }
+                }
+            return relTime;
+        }
+        else
+        {
+            return relTime;
+        }
+    }
+
+    virtual protected bool Reloadable(int curClipCap, int clipCap, int weaponID, float relSliderTime, float relTime)
+    {
+        if (inventory.BulletsStuff(weaponID) <= 0 && relSliderTime >= relTime)
+        {
+            return false;
+        }
+
+        if (curClipCap == clipCap && relSliderTime >= relTime)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     virtual protected string AmmoText(int currentClipCapacity, int weaponID)
