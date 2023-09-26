@@ -1724,6 +1724,7 @@ GameObject:
   - component: {fileID: 9157063727602901243}
   - component: {fileID: 4337085882301212106}
   - component: {fileID: 5927690398727042249}
+  - component: {fileID: -5970462748129466131}
   m_Layer: 0
   m_Name: Target
   m_TagString: TargetBody
@@ -1824,6 +1825,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 8278553469922676190}
   loot: {fileID: 2110353084131987388, guid: 8315417ed250e83408ce050944d4b07e, type: 3}
+--- !u!114 &-5970462748129466131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4493914613880827488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e71766468624545955925fb0ab65df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 7389507112651452681}
 --- !u!1 &4710940672626480558
 GameObject:
   m_ObjectHideFlags: 0
