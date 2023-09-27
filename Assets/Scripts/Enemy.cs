@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     private Vector3 currentPosition;
     private float health = 100;
     private bool playerInTarget = false;
+    private float speed = 10;
+    [SerializeField] private ConusCollisionDetect conusCollisionDetect;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,19 +23,14 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetTarget();
         currentPosition = transform.position;
         if (health <= 0)
         {
             Instantiate(loot, currentPosition, transform.rotation);
             Destroy(gameObject);
         }
-        if (playerInTarget)
-        {
-            Debug.Log("See the player!");
-            GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
-            Transform targetPlayer = playersObj[0].GetComponent<Transform>();
-            transform.LookAt(targetPlayer);
-        }
+        FollowPlayer();
     }
 
     public void ShootEnemy(float damage)
@@ -46,21 +43,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void FollowPlayer()
     {
-        if(other.gameObject.CompareTag("Player"))
+        if (playerInTarget)
         {
-            playerInTarget = true;
-            Debug.Log("See the player!");
+            GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
+            Transform targetPlayer = playersObj[0].GetComponent<Transform>();
+            transform.LookAt(targetPlayer);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
     }
 
-    private void OnTriggerExit(Collider other) 
+    private void GetTarget()
     {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            playerInTarget = false;
-            Debug.Log("Don`t see the player!");
-        }
+        playerInTarget = conusCollisionDetect.TakeTheTarget();
     }
 }

@@ -1825,6 +1825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 8278553469922676190}
   loot: {fileID: 2110353084131987388, guid: 8315417ed250e83408ce050944d4b07e, type: 3}
+  conusCollisionDetect: {fileID: 1621287358450454045}
 --- !u!114 &-5970462748129466131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1837,6 +1838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e71766468624545955925fb0ab65df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conusCollisionDetect: {fileID: 1621287358450454045}
   _animator: {fileID: 7389507112651452681}
 --- !u!1 &4710940672626480558
 GameObject:
@@ -3430,6 +3432,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8184010832865028774, guid: 820dd90e4d32c594d8ae67646d2ef2d8, type: 3}
+--- !u!114 &1621287358450454045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8253001699483531781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2e20629ad72fb4fa777b502b701d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8773959841847271615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 820dd90e4d32c594d8ae67646d2ef2d8, type: 3}
