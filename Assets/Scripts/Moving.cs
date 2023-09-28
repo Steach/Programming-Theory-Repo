@@ -17,22 +17,30 @@ public class Moving : MonoBehaviour
     private Vector3 currentPos;
     private Player player;
     private bool stamina;
+    private bool playerIsDead;
     private float consumptionStamina = 0.1f;
+    [SerializeField] private GameObject deadScreen;
     // Start is called before the first frame update
 
     void Start()
     {
+        deadScreen.SetActive(false);
         playerRB = GetComponent<Rigidbody>();
         player = GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
-    {     
-        ChangeSpeed();
-        Jump();
-        Sit();
-        stamina = player.GetStamina();
+    {   
+        playerIsDead = player.TakePlayerIsDead();
+        if(!playerIsDead)
+        {
+            ChangeSpeed();
+            Jump();
+            Sit();
+            stamina = player.GetStamina();
+        }
+        SetActiveDeadScreen();
     }
 
     void Movement(int acceleration)
@@ -71,6 +79,14 @@ public class Moving : MonoBehaviour
         {
             playerRB.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
             onTheGround = false;
+        }
+    }
+
+    private void SetActiveDeadScreen()
+    {
+        if(playerIsDead)
+        {
+            deadScreen.SetActive(true);
         }
     }
 

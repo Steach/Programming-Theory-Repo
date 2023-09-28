@@ -5,15 +5,19 @@ using UnityEngine;
 public class ZombieAnimationController : MonoBehaviour
 {
     [SerializeField] private ConusCollisionDetect conusCollisionDetect;
+    private Enemy enemy;
     [Header("Animation")]
     [SerializeField] private Animator _animator;
     private AnimationState _currentAnimation;
     private string _animatorParameterName;
     private bool playerInTarget = false;
+    private bool playerCollision = false;
+    private bool enemyDead = false;
       
     // Start is called before the first frame update
     void Start()
     {
+        enemy = GetComponent<Enemy>();
         _animatorParameterName = _animator.GetParameter(0).name;
         Debug.Log(_animatorParameterName);
     }
@@ -22,7 +26,11 @@ public class ZombieAnimationController : MonoBehaviour
     void Update()
     {
         GetTarget();
-        PlayAnimation(AnimationState.zRunInPlace, playerInTarget);
+        GetCollisionPlayer();
+        GetDead();
+        PlayAnimation(AnimationState.zRunInPlace, playerInTarget && !enemyDead);
+        PlayAnimation(AnimationState.zAttack, playerCollision && !enemyDead);
+        PlayAnimation(AnimationState.zFallingBack, enemyDead);
     }
 
     private void PlayAnimation(AnimationState animationState, bool active)
@@ -48,6 +56,16 @@ public class ZombieAnimationController : MonoBehaviour
     private void GetTarget()
     {
         playerInTarget = conusCollisionDetect.TakeTheTarget();
+    }
+
+    private void GetCollisionPlayer()
+    {
+        playerCollision = enemy.TakeThePlayerCollision();
+    }
+
+    private void GetDead()
+    {
+        enemyDead = enemy.TakeDead();
     }
 
     private enum AnimationState

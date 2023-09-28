@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Slider staminaSlider;
     private float health = 100;
     private float stamina = 100;
+    private bool playerIsDead = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        IsDead();
     }
 
     public void DamageHealth(float damage)
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
         {
             health -= damage;
             SetHealthSlider(health);
-        } 
+        }
     }
 
     public void СonsumptionStamina(float consumption)
@@ -63,6 +64,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool TakePlayerIsDead()
+    {
+        return playerIsDead;
+    }
+
+    private void IsDead()
+    {
+        if (health <= 0)
+        {
+            playerIsDead = true;
+        }
+    }
+
     private void SetHealthSlider(float hp)
     {
         healthSlider.value = hp;
@@ -71,5 +85,14 @@ public class Player : MonoBehaviour
     private void SetStaminaSlider(float stam)
     {
         staminaSlider.value = stam;
+    }
+
+    private void OnTriggerEnter (Collider other) 
+    {
+        if(other.CompareTag("EnemyHand"))
+        {
+            Debug.Log("player was damaged");
+            DamageHealth(1f);
+        }
     }
 }
