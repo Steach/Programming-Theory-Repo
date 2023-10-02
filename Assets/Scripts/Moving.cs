@@ -31,7 +31,7 @@ public class Moving : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         playerIsDead = player.TakePlayerIsDead();
         if(!playerIsDead)
         {
@@ -92,10 +92,16 @@ public class Moving : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
+        PlayerStabilization();
         if (other.gameObject.CompareTag("Ground"))
         {
             onTheGround = true;
         }
+    }
+
+    private void OnCollisionExit(Collision other) 
+    {
+        PlayerStabilization();
     }
 
     private void Sit()
@@ -115,5 +121,11 @@ public class Moving : MonoBehaviour
             transform.position = new Vector3 (transform.position.x, currentPos.y, transform.position.z);
             isSitting = false;
         }
+    }
+
+    public void PlayerStabilization()
+    {
+        playerRB.velocity = Vector3.zero;
+        playerRB.angularVelocity = Vector3.zero;
     }
 }

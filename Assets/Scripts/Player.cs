@@ -7,12 +7,14 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider staminaSlider;
+    private Moving moving;
     private float health = 100;
     private float stamina = 100;
     private bool playerIsDead = false;
     // Start is called before the first frame update
     void Start()
     {
+        moving = GetComponent<Moving>();
         healthSlider.maxValue = health;
         staminaSlider.maxValue = stamina;
         SetHealthSlider(health);
@@ -93,6 +95,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("player was damaged");
             DamageHealth(1f);
+            moving.PlayerStabilization();
         }
     }
 }
