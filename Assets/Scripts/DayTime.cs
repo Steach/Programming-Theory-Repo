@@ -7,7 +7,6 @@ public class DayTime : MonoBehaviour
     private float dayLength = 600;
     private float startDay = 0;
     private float endDay = 190;
-    private float lightAngularStep;
     private float timer = 0;
     private float currentRotationX = 0;
     // Start is called before the first frame update
@@ -21,13 +20,6 @@ public class DayTime : MonoBehaviour
     {
         
     }
-
-    /*private void Timer()
-    {
-        dayLength -= Time.deltaTime;
-        Debug.Log(dayLength);
-        transform.Rotate(Vector3.right, lightAngularStep * Time.deltaTime);
-    }*/
 
     private IEnumerator RotationAndCountdown()
     {

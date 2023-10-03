@@ -8,7 +8,7 @@ public class SpawnSystem : MonoBehaviour
     private Vector3 spawnPosition;
     private float spawnLimitPos = 40;
     private Quaternion spawnRotation;
-    private float yPos = 0.05f;
+    private float yPos = 0;
     private int enemyCount;
     // Start is called before the first frame update
     void Start()

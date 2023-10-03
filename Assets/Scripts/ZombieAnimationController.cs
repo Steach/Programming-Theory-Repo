@@ -31,6 +31,7 @@ public class ZombieAnimationController : MonoBehaviour
         PlayAnimation(AnimationState.zRunInPlace, playerInTarget && !enemyDead);
         PlayAnimation(AnimationState.zAttack, playerCollision && !enemyDead);
         PlayAnimation(AnimationState.zFallingBack, enemyDead);
+        PlayAnimation(AnimationState.zWalk1InPlace, !playerInTarget);
     }
 
     private void PlayAnimation(AnimationState animationState, bool active)
