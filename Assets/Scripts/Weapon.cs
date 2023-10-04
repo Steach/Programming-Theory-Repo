@@ -24,6 +24,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected Transform aimPosition;
     [SerializeField] protected Transform defaultPosition;
     [SerializeField] protected Slider reloadSlider;
+    [SerializeField] protected AudioClip shootAudioClip;
+    [SerializeField] protected AudioSource playAudio;
     protected Recoil recoil;
     private int bullets;
     private Inventory inventory;
@@ -40,9 +42,10 @@ public class Weapon : MonoBehaviour
         
     }
 
-    virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle, float recoilF)
+    virtual protected void Shoot(GameObject bulPrefab, Transform firePos, ParticleSystem shootPrticle, float recoilF, AudioClip shootAudio, AudioSource source)
     {
         recoil = GameObject.Find("Head").GetComponent<Recoil>();
+        source.PlayOneShot(shootAudio);
         GameObject bulletInstance = Instantiate(bulPrefab, firePos.position, firePos.rotation) as GameObject;
         recoil.Recoiling(recoilF);
         shootPrticle.Play();

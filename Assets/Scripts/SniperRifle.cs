@@ -51,7 +51,7 @@ public class SniperRifle : Weapon
     {
         if (fireTimeout >= (1f / fireRatePS) && currentClipCapacity > 0 && Input.GetKeyDown(KeyCode.Mouse0) && reloadSlider.value >= reloadTime)
         {
-            Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce);
+            Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce, shootAudioClip, playAudio);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
         }

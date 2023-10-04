@@ -13,9 +13,13 @@ public class Enemy : MonoBehaviour
     private bool playerCollision = false;
     private bool dead = false;
     private float speed = 10;
-    private float maxDistance = 7;
-    private Vector3 startPotition;
+    private float maxDistance = 5;
+    private Vector3 startPosition;
     private Vector3 endPosition;
+    private Quaternion startRotation;
+    private Quaternion endRotation;
+    private float rotationSpeed = 1;
+    private float _t;
     [SerializeField] private ConusCollisionDetect conusCollisionDetect;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +27,9 @@ public class Enemy : MonoBehaviour
         healthSlider.maxValue = health;
         healthSlider.value = health;
         Debug.Log("Health: " + health);
-        startPotition = transform.position;
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+        endRotation = Quaternion.Euler(0, 180, 0);
     }
 
     // Update is called once per frame
@@ -52,16 +58,18 @@ public class Enemy : MonoBehaviour
 
     private void EnemyWalking()
     {
-        Debug.DrawLine(startPotition, transform.position, Color.red);
-        float distance = Vector3.Distance(startPotition, transform.position);
-        Debug.Log(distance);
-        if(!playerInTarget && distance <= maxDistance)
+        _t = Time.deltaTime * 0.5f;
+        Debug.DrawLine(startPosition, transform.position, Color.red);
+        float distance = Vector3.Distance(startPosition, transform.position);
+        //Debug.Log(transform.rotation.y);
+        if(!playerInTarget && distance <= maxDistance && !dead)
         {
             transform.Translate(Vector3.forward * (speed / 20) * Time.deltaTime);
-        } else if (distance >= maxDistance)
+
+        } else if (!playerInTarget && distance >= maxDistance && !dead)
         {
-            startPotition = transform.position;
-            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y + 180, transform.rotation.z, 1);
+            startPosition = transform.position;
+            RotateEnemy();
             distance = 0;
         }
     }
@@ -87,6 +95,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void RotateEnemy()
+    {
+        transform.Rotate(Vector3.up, 180.0f);
+    }
+
+    /*private void LerpRotateEnemy()
+    {
+        Debug.Log("LerpRotateEnemy");
+        transform.rotation = Quaternion.Lerp(startRotation, endRotation, 1);
+        startRotation = transform.rotation;
+        endRotation = Quaternion.Euler(0, 180, 0);
+    }*/
+
     IEnumerator DeathTimer()
     {
         yield return new WaitForSeconds(3);
@@ -98,6 +119,7 @@ public class Enemy : MonoBehaviour
     {
         playerInTarget = conusCollisionDetect.TakeTheTarget();
     }
+
 
     private void OnTriggerEnter(Collider other) 
     {
