@@ -94,7 +94,9 @@ public class Player : MonoBehaviour
         if(other.CompareTag("EnemyHand"))
         {
             Debug.Log("player was damaged");
-            DamageHealth(1f);
+            Enemy enemy = GameObject.FindGameObjectWithTag("TargetBody").GetComponent<Enemy>();
+            enemy.AudioHit();
+            DamageHealth(5f);
             moving.PlayerStabilization();
         }
     }

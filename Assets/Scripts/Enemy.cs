@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,14 @@ public class Enemy : MonoBehaviour
     private float rotationSpeed = 1;
     private float _t;
     [SerializeField] private ConusCollisionDetect conusCollisionDetect;
+    private int _id;
+    
+    [Header("Sound")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip zombieMoan;
+    [SerializeField] private AudioClip zombieHit;
+    [SerializeField] private AudioClip zombieAgressive;
+    [SerializeField] private AudioClip zombieFall;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +39,7 @@ public class Enemy : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
         endRotation = Quaternion.Euler(0, 180, 0);
+        Debug.Log(_id);
     }
 
     // Update is called once per frame
@@ -61,7 +71,6 @@ public class Enemy : MonoBehaviour
         _t = Time.deltaTime * 0.5f;
         Debug.DrawLine(startPosition, transform.position, Color.red);
         float distance = Vector3.Distance(startPosition, transform.position);
-        //Debug.Log(transform.rotation.y);
         if(!playerInTarget && distance <= maxDistance && !dead)
         {
             transform.Translate(Vector3.forward * (speed / 20) * Time.deltaTime);
@@ -98,6 +107,28 @@ public class Enemy : MonoBehaviour
     private void RotateEnemy()
     {
         transform.Rotate(Vector3.up, 180.0f);
+    }
+
+    /*private void PlaAudios()
+    {
+        audioSource.loop = true;
+        audioSource.clip = zombieMoan;
+        audioSource.Play();
+    }*/
+
+    public void AudioHit()
+    {
+        audioSource.PlayOneShot(zombieHit);
+    }
+
+    public void GetID(int id)
+    {
+        _id = id;
+    }
+
+    public int TakeID()
+    {
+        return _id;
     }
 
     /*private void LerpRotateEnemy()

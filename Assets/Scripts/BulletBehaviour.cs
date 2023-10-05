@@ -15,6 +15,8 @@ public class BulletBehaviour : MonoBehaviour
     private int enemiesCount;
     private float bulletSpeed;
     private int weaponIndex;
+    private List<Enemy> enemies = new List<Enemy>();
+    private List<int> enemyIds = new List<int>();
     
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,6 @@ public class BulletBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindEnemies();
         VarificationShoot();
         BulletDeath();
     }
@@ -60,9 +61,14 @@ public class BulletBehaviour : MonoBehaviour
         {
             if (enemiesCount > 0 && hit.collider.CompareTag("TargetBody"))
             {
-                Debug.Log("Bullet hit the target: " + damage);
-                enemy.ShootEnemy(damage);
-                Destroy(gameObject);
+                int enemyIndex = enemyIds.IndexOf(hit.collider.GetComponent<Enemy>().TakeID());
+                if(enemyIndex >= 0 && enemyIndex < enemies.Count)
+                {
+                    Enemy enemy = enemies[enemyIndex];
+                    enemy.ShootEnemy(damage);
+                    Debug.Log("Bullet hit the target: " + damage);
+                    Destroy(gameObject);
+                }                
             }
         }
         
@@ -100,11 +106,18 @@ public class BulletBehaviour : MonoBehaviour
 
     private void FindEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("TargetBody");
-        enemiesCount = enemies.Length;
-        if (enemiesCount > 0)
-        {  
-            enemy = GameObject.Find("Target(Clone)").GetComponent<Enemy>();
+        GameObject[] enemiesObjects = GameObject.FindGameObjectsWithTag("TargetBody");
+        enemiesCount = enemiesObjects.Length;
+
+        foreach (GameObject enemyObject in enemiesObjects)
+        {
+            Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
+            if(enemyComponent != null)
+            {
+                enemies.Add(enemyComponent);
+                int enemyId = enemyComponent.TakeID();
+                enemyIds.Add(enemyId);
+            }
         }
     }
 
