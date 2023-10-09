@@ -47,7 +47,7 @@ public class SpawnSystem : MonoBehaviour
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("TargetBody");
         enemyCount = enemies.Length;
-        if (enemyCount <= 1)
+        if (enemyCount <= 0)
         {
             SpawnEnemy();
         }

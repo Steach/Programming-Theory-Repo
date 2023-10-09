@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     private bool playerInTarget = false;
     private bool playerCollision = false;
     private bool dead = false;
+    private bool fall = false;
+    private bool aggressive = false;
     private float speed = 10;
     private float maxDistance = 5;
     private Vector3 startPosition;
@@ -54,6 +56,8 @@ public class Enemy : MonoBehaviour
         }
         FollowPlayer();
         EnemyWalking();
+        ZDead();
+        ZAggrissive();
     }
 
     public void ShootEnemy(float damage)
@@ -109,6 +113,29 @@ public class Enemy : MonoBehaviour
         transform.Rotate(Vector3.up, 180.0f);
     }
 
+    private void ZDead()
+    {
+        if(dead && !fall)
+        {
+            fall = true;
+            float delay = 0.4f;
+            Invoke("ZombieFallSound", delay);
+        }
+    }
+
+    private void ZombieFallSound()
+    {
+        audioSource.PlayOneShot(zombieFall);
+    }
+
+    private void ZAggrissive()
+    {
+        if(aggressive)
+        {
+            aggressive = false;
+            audioSource.PlayOneShot(zombieAgressive);
+        }
+    }
     /*private void PlaAudios()
     {
         audioSource.loop = true;
@@ -157,6 +184,7 @@ public class Enemy : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             playerCollision = true;
+            aggressive = true;
             Debug.Log("At the player");
         }
     }
@@ -165,6 +193,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            aggressive = false;
             playerCollision = false;
         }
     }
