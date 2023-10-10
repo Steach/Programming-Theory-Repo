@@ -20,6 +20,11 @@ public class Moving : MonoBehaviour
     private bool playerIsDead;
     private float consumptionStamina = 0.1f;
     [SerializeField] private GameObject deadScreen;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip stepSound;
+    private float stepSoundTiming;
+    private bool running = false;
+    private float stepTiming = 0.5f;
     // Start is called before the first frame update
 
     void Start()
@@ -39,12 +44,14 @@ public class Moving : MonoBehaviour
             Jump();
             Sit();
             stamina = player.GetStamina();
+            BoolRuninng();
         }
         SetActiveDeadScreen();
     }
 
     void Movement(int acceleration)
     {
+        StartStepAudio();
         float forwardMovement = Input.GetAxis("Vertical") * moveSpeed * acceleration * Time.deltaTime;
         float strayfMovement = Input.GetAxis("Horizontal") * strayfSpeed * acceleration * Time.deltaTime;
         float turnMovement = Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime;
@@ -58,16 +65,19 @@ public class Moving : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.LeftShift) && !isSitting && stamina)
         {
+            stepTiming = 0.3f;
             Movement(multiplySpeed);
             player.СonsumptionStamina(consumptionStamina);
         }
         else if(isSitting)
         {
+            stepTiming = 0.8f;
             Movement(normalSpeed/2);
             player.RecoveryStamina();
         }
         else
         {
+            stepTiming = 0.5f;
             Movement(normalSpeed);
             player.RecoveryStamina();
         }
@@ -120,6 +130,39 @@ public class Moving : MonoBehaviour
         {
             transform.position = new Vector3 (transform.position.x, currentPos.y, transform.position.z);
             isSitting = false;
+        }
+    }
+
+    private void StartStepAudio()
+    {
+        if(running)
+        {
+            if(stepSoundTiming == 0)
+            {
+                audioSource.PlayOneShot(stepSound);
+            }
+
+            if(stepSoundTiming < stepTiming)
+            {
+                stepSoundTiming += Time.deltaTime;
+            }
+
+            if(stepSoundTiming >= stepTiming)
+            {
+                stepSoundTiming = 0;
+            }
+        }
+    }
+
+    private void BoolRuninng()
+    {
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S))
+        {
+            running = true;
+        }
+        else
+        {
+            running = false;
         }
     }
 

@@ -49,7 +49,8 @@ public class Player : MonoBehaviour
     {
         if (stamina < 100)
         {
-            stamina += 0.02f;
+            Debug.Log("Recovery");
+            stamina += 0.05f;
             SetStaminaSlider(stamina);
         }
     }
@@ -100,4 +101,6 @@ public class Player : MonoBehaviour
             moving.PlayerStabilization();
         }
     }
+
+    
 }

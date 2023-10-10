@@ -130,10 +130,17 @@ public class Enemy : MonoBehaviour
 
     private void ZAggrissive()
     {
-        if(aggressive)
+        if(!aggressive && playerInTarget && !dead)
         {
-            aggressive = false;
+            Debug.Log("Aggressive: " + aggressive);
+            aggressive = true;
             audioSource.PlayOneShot(zombieAgressive);
+        }
+
+        if(aggressive && !playerInTarget && !dead)
+        {
+            Debug.Log("Aggressive: " + aggressive);
+            aggressive = false;
         }
     }
     /*private void PlaAudios()
@@ -184,8 +191,6 @@ public class Enemy : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             playerCollision = true;
-            aggressive = true;
-            Debug.Log("At the player");
         }
     }
 
@@ -193,7 +198,6 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            aggressive = false;
             playerCollision = false;
         }
     }
