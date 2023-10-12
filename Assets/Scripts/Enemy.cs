@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     private bool aggressive = false;
     private float speed = 10;
     private float maxDistance = 5;
+    private float timer;
+    private float moanTime = 1.0f;
     private Vector3 startPosition;
     private Vector3 endPosition;
     private Quaternion startRotation;
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
     
     [Header("Sound")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip zombieMoan;
+    [SerializeField] private AudioClip[] zombieMoans;
     [SerializeField] private AudioClip zombieHit;
     [SerializeField] private AudioClip zombieAgressive;
     [SerializeField] private AudioClip zombieFall;
@@ -58,6 +60,7 @@ public class Enemy : MonoBehaviour
         EnemyWalking();
         ZDead();
         ZAggrissive();
+        ZombieMoan();
     }
 
     public void ShootEnemy(float damage)
@@ -142,6 +145,28 @@ public class Enemy : MonoBehaviour
             Debug.Log("Aggressive: " + aggressive);
             aggressive = false;
         }
+    }
+
+    private void ZombieMoan()
+    {
+        Debug.Log(timer);
+        if(timer == 0)
+        {
+            int moanIndex = Random.Range(1, zombieMoans.Length);
+            audioSource.PlayOneShot(zombieMoans[moanIndex]);
+        }
+
+        if(timer <= moanTime)
+        {
+            timer += Time.deltaTime;
+        }
+
+        if(timer >= moanTime)
+        {
+            timer = 0;
+        }
+        
+        
     }
     /*private void PlaAudios()
     {

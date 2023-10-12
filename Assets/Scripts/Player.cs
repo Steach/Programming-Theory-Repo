@@ -101,6 +101,4 @@ public class Player : MonoBehaviour
             moving.PlayerStabilization();
         }
     }
-
-    
 }

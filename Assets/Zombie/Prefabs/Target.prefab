@@ -1927,7 +1927,10 @@ MonoBehaviour:
   loot: {fileID: 2110353084131987388, guid: 8315417ed250e83408ce050944d4b07e, type: 3}
   conusCollisionDetect: {fileID: 1621287358450454045}
   audioSource: {fileID: 6952224001559286966}
-  zombieMoan: {fileID: 8300000, guid: ad7b6eb3c723442b483e6b280fa02230, type: 3}
+  zombieMoans:
+  - {fileID: 8300000, guid: 90d342cf6f89440b9aa6c6ef4af6af88, type: 3}
+  - {fileID: 8300000, guid: 8c8b4012f639545b2a1f70a2082307b3, type: 3}
+  - {fileID: 8300000, guid: ad7b6eb3c723442b483e6b280fa02230, type: 3}
   zombieHit: {fileID: 8300000, guid: d65b81d6b848b467da29dab292d5ac66, type: 3}
   zombieAgressive: {fileID: 8300000, guid: c5e72c14120434b7d8c3248afc4851b6, type: 3}
   zombieFall: {fileID: 8300000, guid: 9bc3698e477ac4560b31718c410cd66f, type: 3}
