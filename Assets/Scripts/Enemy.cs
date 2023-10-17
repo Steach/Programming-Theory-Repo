@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     private float speed = 10;
     private float maxDistance = 5;
     private float timer;
-    private float moanTime = 1.0f;
+    private float moanTime = 5.0f;
     private Vector3 startPosition;
     private Vector3 endPosition;
     private Quaternion startRotation;
@@ -161,7 +161,7 @@ public class Enemy : MonoBehaviour
             timer += Time.deltaTime;
         }
 
-        if(timer >= moanTime)
+        if(timer > moanTime)
         {
             timer = 0;
         }
