@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ObjectSpawner))]
+[CustomEditor(typeof(FloorObjectSpawner))]
 public class SceneSpawner : Editor
 {
     public override void OnInspectorGUI()
@@ -11,7 +11,7 @@ public class SceneSpawner : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Spawn Objects"))
         {
-            ObjectSpawner spawner = (ObjectSpawner)target;
+            FloorObjectSpawner spawner = (FloorObjectSpawner)target;
             spawner.SpawnObject();
         }
     }

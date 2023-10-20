@@ -149,7 +149,7 @@ public class Enemy : MonoBehaviour
 
     private void ZombieMoan()
     {
-        Debug.Log(timer);
+        //Debug.Log(timer);
         if(timer == 0)
         {
             int moanIndex = Random.Range(1, zombieMoans.Length);
