@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WallsSpawner : ObjectSpawner
 {
+
+    [SerializeField] private bool xTOz = false;
     public GameObject gameObjectForMesh;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +21,10 @@ public class WallsSpawner : ObjectSpawner
 
     public void SpawnObjects()
     {
-        SetSteps();
+        if(!xTOz)
+        {
+            SetSteps();
+        }
         Vector3 spawnPosition = new Vector3 (xStart, yStart, zStart);
         Quaternion spawnRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
         for(int i = 0; i < countOfSpawnX; i++)

@@ -5,16 +5,20 @@ using UnityEngine;
 public class SpawnSystem : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
-    private Vector3 spawnPosition;
+    [SerializeField] private GameObject[] spawnPositionOdjects;
+    [SerializeField] private GameObject[] playerSpawnPosition;
+    [SerializeField] private GameObject player;
     private float spawnLimitPos = 40;
+    private Vector3 spawnPosition;
     private Quaternion spawnRotation;
     private float yPos = 0;
     private int enemyCount;
     private int id = 0;
+    private bool spawnedAllEnemies = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerSpawner();
     }
 
     // Update is called once per frame
@@ -25,7 +29,7 @@ public class SpawnSystem : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        RandomizePosition();
+        GetSpawnPosition();
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, RandomRotation());
 
         Enemy enemy = newEnemy.GetComponent<Enemy>();
@@ -36,20 +40,25 @@ public class SpawnSystem : MonoBehaviour
         }
     }
 
-    private void RandomizePosition()
+    private void GetSpawnPosition()
     {
-        float xRandPos = Random.Range(-spawnLimitPos, spawnLimitPos);
-        float zRandPos = Random.Range(-spawnLimitPos, spawnLimitPos);
-        spawnPosition = new Vector3(xRandPos, yPos, zRandPos);
+        spawnPosition = spawnPositionOdjects[id].transform.position;
     }
 
     private void FindEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("TargetBody");
-        enemyCount = enemies.Length;
-        if (enemyCount <= 0)
+        if(!spawnedAllEnemies)
         {
-            SpawnEnemy();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("TargetBody");
+            enemyCount = enemies.Length;
+            if (enemyCount < spawnPositionOdjects.Length)
+            {
+                SpawnEnemy();
+            }
+            else
+            {
+                spawnedAllEnemies = true;
+            }
         }
     }
 
@@ -60,13 +69,9 @@ public class SpawnSystem : MonoBehaviour
         return spawnRotation;
     }
 
-    /*public void IdentificationEnemies()
+    private void PlayerSpawner()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("TargetBody");
-        foreach (GameObject enemy in enemies)
-        {
-            enemy.GetComponent<Enemy>();
-            int id = enemy.
-        }
-    }*/
+        int spawnPlace = Random.Range(0, playerSpawnPosition.Length);
+        player.transform.position = playerSpawnPosition[spawnPlace].transform.position;
+    }
 }
