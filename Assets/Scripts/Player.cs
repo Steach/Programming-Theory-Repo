@@ -49,7 +49,6 @@ public class Player : MonoBehaviour
     {
         if (stamina < 100)
         {
-            Debug.Log("Recovery");
             stamina += 0.05f;
             SetStaminaSlider(stamina);
         }

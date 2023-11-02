@@ -8,10 +8,8 @@ public class SpawnSystem : MonoBehaviour
     [SerializeField] private GameObject[] spawnPositionOdjects;
     [SerializeField] private GameObject[] playerSpawnPosition;
     [SerializeField] private GameObject player;
-    private float spawnLimitPos = 40;
     private Vector3 spawnPosition;
     private Quaternion spawnRotation;
-    private float yPos = 0;
     private int enemyCount;
     private int id = 0;
     private bool spawnedAllEnemies = false;
@@ -30,7 +28,7 @@ public class SpawnSystem : MonoBehaviour
     private void SpawnEnemy()
     {
         GetSpawnPosition();
-        GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, RandomRotation());
+        GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, spawnRotation);
 
         Enemy enemy = newEnemy.GetComponent<Enemy>();
         if(enemy != null)
@@ -43,6 +41,7 @@ public class SpawnSystem : MonoBehaviour
     private void GetSpawnPosition()
     {
         spawnPosition = spawnPositionOdjects[id].transform.position;
+        spawnRotation = spawnPositionOdjects[id].transform.rotation;
     }
 
     private void FindEnemies()
@@ -62,16 +61,10 @@ public class SpawnSystem : MonoBehaviour
         }
     }
 
-    private Quaternion RandomRotation()
-    {
-        float spawnPositionY = Random.Range(-1, 1);
-        spawnRotation = new Quaternion(0, spawnPositionY, 0, 1);
-        return spawnRotation;
-    }
-
     private void PlayerSpawner()
     {
         int spawnPlace = Random.Range(0, playerSpawnPosition.Length);
         player.transform.position = playerSpawnPosition[spawnPlace].transform.position;
+        player.transform.rotation = playerSpawnPosition[spawnPlace].transform.rotation;
     }
 }

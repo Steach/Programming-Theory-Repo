@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
     [SerializeField] private GameObject loot;
+    private Rigidbody enemyRB;
     private Vector3 currentPosition;
     private float health = 100;
     private bool playerInTarget = false;
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     private float maxDistance = 5;
     private float timer;
     private float moanTime = 5.0f;
+    private float minDistanceToPlayer = 1.7f;
     private Vector3 startPosition;
     private Vector3 endPosition;
     private Quaternion startRotation;
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
         endRotation = Quaternion.Euler(0, 180, 0);
+        enemyRB = gameObject.GetComponent<Rigidbody>();
         Debug.Log(_id);
     }
 
@@ -100,6 +103,7 @@ public class Enemy : MonoBehaviour
                 Vector3 targetPlayer = playersObj[0].transform.position;
                 Vector3 directionToPlayer = targetPlayer - transform.position;
                 Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+                DistanceToPlayer(transform.position, targetPlayer);
                 lookRotation.x = 0f;
                 lookRotation.z = 0f;
                 transform.rotation = lookRotation;
@@ -135,14 +139,14 @@ public class Enemy : MonoBehaviour
     {
         if(!aggressive && playerInTarget && !dead)
         {
-            Debug.Log("Aggressive: " + aggressive);
+            //Debug.Log("Aggressive: " + aggressive);
             aggressive = true;
             audioSource.PlayOneShot(zombieAgressive);
         }
 
         if(aggressive && !playerInTarget && !dead)
         {
-            Debug.Log("Aggressive: " + aggressive);
+            //Debug.Log("Aggressive: " + aggressive);
             aggressive = false;
         }
     }
@@ -210,12 +214,29 @@ public class Enemy : MonoBehaviour
         playerInTarget = conusCollisionDetect.TakeTheTarget();
     }
 
+    private bool DistanceToPlayer(Vector3 selfPosition, Vector3 targetPosition)
+    {
+        float distance = Vector3.Distance(selfPosition, targetPosition);
+        if(distance < minDistanceToPlayer)
+        {
+            playerCollision = true;
+        }
 
-    private void OnTriggerEnter(Collider other) 
+        if(distance >= minDistanceToPlayer)
+        {
+            playerCollision = false;
+        }
+
+        Debug.Log(distance);
+        return playerCollision;
+    }
+
+    /*private void OnTriggerEnter(Collider other) 
     {
         if(other.CompareTag("Player"))
         {
             playerCollision = true;
+            Debug.Log("Collision");
         }
     }
 
@@ -224,8 +245,9 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerCollision = false;
+            Debug.Log("Not Collision");
         }
-    }
+    }*/
 
     public bool TakeThePlayerCollision()
     {
