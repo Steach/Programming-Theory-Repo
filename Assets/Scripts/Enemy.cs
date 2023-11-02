@@ -139,21 +139,18 @@ public class Enemy : MonoBehaviour
     {
         if(!aggressive && playerInTarget && !dead)
         {
-            //Debug.Log("Aggressive: " + aggressive);
             aggressive = true;
             audioSource.PlayOneShot(zombieAgressive);
         }
 
         if(aggressive && !playerInTarget && !dead)
         {
-            //Debug.Log("Aggressive: " + aggressive);
             aggressive = false;
         }
     }
 
     private void ZombieMoan()
     {
-        //Debug.Log(timer);
         if(timer == 0)
         {
             int moanIndex = Random.Range(1, zombieMoans.Length);
@@ -169,15 +166,7 @@ public class Enemy : MonoBehaviour
         {
             timer = 0;
         }
-        
-        
     }
-    /*private void PlaAudios()
-    {
-        audioSource.loop = true;
-        audioSource.clip = zombieMoan;
-        audioSource.Play();
-    }*/
 
     public void AudioHit()
     {
@@ -193,14 +182,6 @@ public class Enemy : MonoBehaviour
     {
         return _id;
     }
-
-    /*private void LerpRotateEnemy()
-    {
-        Debug.Log("LerpRotateEnemy");
-        transform.rotation = Quaternion.Lerp(startRotation, endRotation, 1);
-        startRotation = transform.rotation;
-        endRotation = Quaternion.Euler(0, 180, 0);
-    }*/
 
     IEnumerator DeathTimer()
     {
@@ -230,24 +211,6 @@ public class Enemy : MonoBehaviour
         Debug.Log(distance);
         return playerCollision;
     }
-
-    /*private void OnTriggerEnter(Collider other) 
-    {
-        if(other.CompareTag("Player"))
-        {
-            playerCollision = true;
-            Debug.Log("Collision");
-        }
-    }
-
-    private void OnTriggerExit(Collider other) 
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerCollision = false;
-            Debug.Log("Not Collision");
-        }
-    }*/
 
     public bool TakeThePlayerCollision()
     {
