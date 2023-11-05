@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     private float rotationSpeed = 1;
     private float _t;
     [SerializeField] private ConusCollisionDetect conusCollisionDetect;
+    private FieldOfVision fieldOfVision;
     private int _id;
     
     [Header("Sound")]
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fieldOfVision = GetComponent<FieldOfVision>();
         healthSlider.maxValue = health;
         healthSlider.value = health;
         Debug.Log("Health: " + health);
@@ -192,7 +194,8 @@ public class Enemy : MonoBehaviour
 
     private void GetTarget()
     {
-        playerInTarget = conusCollisionDetect.TakeTheTarget();
+        playerInTarget = fieldOfVision.TakeTheTarget();
+        //playerInTarget = conusCollisionDetect.TakeTheTarget();
     }
 
     private bool DistanceToPlayer(Vector3 selfPosition, Vector3 targetPosition)
