@@ -5,7 +5,7 @@ using UnityEngine.SocialPlatforms;
 
 public class FieldOfVision : MonoBehaviour
 {
-    private float maxDistance = 50f;
+    private float maxDistance = 30f;
     private Vector3 direction = Vector3.forward;
     [SerializeField] private Vector3 offset;
     [SerializeField] private int _raysCount;
@@ -20,13 +20,12 @@ public class FieldOfVision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RayToScan();
+        playerInTarget = RayToScan();
     }
 
     private bool RaycastField(Vector3 globalDirection)
     {
         playerInTarget = false;
-        //Vector3 globalDirection = transform.TransformDirection(direction);
         Vector3 position = transform.position + offset;
         RaycastHit hit = new RaycastHit();
         if(Physics.Raycast(position, globalDirection, out hit, maxDistance))
@@ -35,8 +34,6 @@ public class FieldOfVision : MonoBehaviour
             {
                 Debug.DrawLine(position, hit.point, Color.green);
                 playerInTarget = true;
-                Debug.Log("PlayerInTarget");
-                Debug.Log(playerInTarget);
             }
             else
             {
@@ -62,7 +59,7 @@ public class FieldOfVision : MonoBehaviour
             var x = Mathf.Sin(j);
             var y = Mathf.Cos(j);
 
-            j += +_angle * Mathf.Deg2Rad / _raysCount;
+            j += _angle / _raysCount;
 
             Vector3 dir = transform.TransformDirection(new Vector3(x, 0, y));
             if (RaycastField(dir)) a = true;

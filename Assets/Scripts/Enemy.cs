@@ -27,7 +27,6 @@ public class Enemy : MonoBehaviour
     private Quaternion endRotation;
     private float rotationSpeed = 1;
     private float _t;
-    [SerializeField] private ConusCollisionDetect conusCollisionDetect;
     private FieldOfVision fieldOfVision;
     private int _id;
     
@@ -195,7 +194,6 @@ public class Enemy : MonoBehaviour
     private void GetTarget()
     {
         playerInTarget = fieldOfVision.TakeTheTarget();
-        //playerInTarget = conusCollisionDetect.TakeTheTarget();
     }
 
     private bool DistanceToPlayer(Vector3 selfPosition, Vector3 targetPosition)

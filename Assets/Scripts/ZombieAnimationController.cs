@@ -13,13 +13,14 @@ public class ZombieAnimationController : MonoBehaviour
     private bool playerInTarget = false;
     private bool playerCollision = false;
     private bool enemyDead = false;
+    private FieldOfVision fieldOfVision;
       
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
+        fieldOfVision = GetComponent<FieldOfVision>();
         _animatorParameterName = _animator.GetParameter(0).name;
-        Debug.Log(_animatorParameterName);
     }
 
     // Update is called once per frame
@@ -56,7 +57,7 @@ public class ZombieAnimationController : MonoBehaviour
 
     private void GetTarget()
     {
-        playerInTarget = conusCollisionDetect.TakeTheTarget();
+        playerInTarget = fieldOfVision.TakeTheTarget();
     }
 
     private void GetCollisionPlayer()
