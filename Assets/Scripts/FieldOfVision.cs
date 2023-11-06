@@ -33,12 +33,14 @@ public class FieldOfVision : MonoBehaviour
         {
             if(hit.collider.CompareTag("Player"))
             {
-                Debug.DrawRay(position, globalDirection * maxDistance, Color.green);
+                Debug.DrawLine(position, hit.point, Color.green);
                 playerInTarget = true;
+                Debug.Log("PlayerInTarget");
+                Debug.Log(playerInTarget);
             }
             else
             {
-                Debug.DrawRay(position, globalDirection * maxDistance, Color.blue);
+                Debug.DrawLine(position, hit.point, Color.blue);
             }
         }
         else
