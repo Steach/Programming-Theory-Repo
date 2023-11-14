@@ -107,6 +107,18 @@ public class Moving : MonoBehaviour
         {
             onTheGround = true;
         }
+    //---Trying don`t miss the player---
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            currentPos = transform.position;
+            Debug.Log(currentPos);
+        }
+
+        if (other.gameObject.CompareTag("NotWall"))
+        {
+            transform.position = currentPos;
+        }
+    //----------------------------------
     }
 
     private void OnCollisionExit(Collision other) 

@@ -11,6 +11,8 @@ TagManager:
   - Weapon
   - Ground
   - EnemyHand
+  - Wall
+  - NotWall
   layers:
   - Default
   - TransparentFX
