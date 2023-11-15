@@ -25,7 +25,7 @@ public class BulletBehaviour : MonoBehaviour
         FindWeapon();
         previuslyPosition = transform.position;
         lifeTime = 0;
-        bulletSpeed = 25f;
+        bulletSpeed = 50f;
         bulletrb = GetComponent<Rigidbody>();
     }
 
