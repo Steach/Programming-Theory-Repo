@@ -11,10 +11,12 @@ public class Player : MonoBehaviour
     private float health = 100;
     private float stamina = 100;
     private bool playerIsDead = false;
+    private ExitButton exitButton;
     // Start is called before the first frame update
     void Start()
     {
         moving = GetComponent<Moving>();
+        exitButton = GameObject.Find("Button").GetComponent<ExitButton>();
         healthSlider.maxValue = health;
         staminaSlider.maxValue = stamina;
         SetHealthSlider(health);
@@ -98,6 +100,19 @@ public class Player : MonoBehaviour
             enemy.AudioHit();
             DamageHealth(5f);
             moving.PlayerStabilization();
+        }
+
+        if(other.CompareTag("ExitButton"))
+        {
+            exitButton.ShowUIText(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        if(other.CompareTag("ExitButton"))
+        {
+            exitButton.ShowUIText(false);
         }
     }
 }
