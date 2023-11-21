@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
     private float health = 100;
     private float stamina = 100;
     private bool playerIsDead = false;
-    private ExitButton exitButton;
+    //private MainButton mainButton;
+    //private FirstButton firstButton;
     // Start is called before the first frame update
     void Start()
     {
         moving = GetComponent<Moving>();
-        exitButton = GameObject.Find("Button").GetComponent<ExitButton>();
+        //mainButton = GameObject.Find("MainButton").GetComponent<MainButton>();
+        //firstButton = GameObject.Find("FirstButton").GetComponent<FirstButton>();
         healthSlider.maxValue = health;
         staminaSlider.maxValue = stamina;
         SetHealthSlider(health);
@@ -102,17 +104,34 @@ public class Player : MonoBehaviour
             moving.PlayerStabilization();
         }
 
-        if(other.CompareTag("ExitButton"))
+        if(other.CompareTag("Button"))
         {
-            exitButton.ShowUIText(true);
+            FirstButton firstButton = other.GetComponent<FirstButton>();
+            MainButton mainButton = other.GetComponent<MainButton>();
+            if(mainButton != null)
+            {
+                mainButton.ShowUIText(true);
+            }
+            
+            if(firstButton != null)
+            {
+                firstButton.ShowUIText(true);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other) 
     {
-        if(other.CompareTag("ExitButton"))
-        {
-            exitButton.ShowUIText(false);
-        }
+        FirstButton firstButton = other.GetComponent<FirstButton>();
+            MainButton mainButton = other.GetComponent<MainButton>();
+            if(mainButton != null)
+            {
+                mainButton.ShowUIText(false);
+            }
+            
+            if(firstButton != null)
+            {
+                firstButton.ShowUIText(false);
+            }
     }
 }

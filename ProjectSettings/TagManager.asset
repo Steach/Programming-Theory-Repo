@@ -13,7 +13,7 @@ TagManager:
   - EnemyHand
   - Wall
   - NotWall
-  - ExitButton
+  - Button
   layers:
   - Default
   - TransparentFX
