@@ -11,6 +11,7 @@ public class FirstButton : Button
         unlockedColor = new Color(0, 1, 0, 1);
         nearTheButton = false;
         FindMainButton();
+        SetDefColor();
     }
 
     // Update is called once per frame
@@ -31,8 +32,6 @@ public class FirstButton : Button
         if(nearTheButton && Input.GetKeyDown(KeyCode.E))
         {
             mainButton.SetFirstKey(true);
-            mainButton.SetSecondKey(true);
-            mainButton.SetThirdKey(true);
         }
     }
 }

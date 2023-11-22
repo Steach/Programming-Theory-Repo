@@ -12,9 +12,11 @@ public abstract class Button : MonoBehaviour
     public bool secondKey = false;
     public bool thirdKey = false;
     [SerializeField] protected Light light;
+    [SerializeField] protected Material materialLight;
     protected Color lockedColor;
     protected Color unlockedColor;
     protected MainButton mainButton;
+    [SerializeField] protected Light lightIndicator;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +53,15 @@ public abstract class Button : MonoBehaviour
         {
             animator.SetBool("NearTheBotton", true);
             Debug.Log("Pressed Button");
+            if (lightIndicator != null)
+            {
+                lightIndicator.color = unlockedColor;
+            }
+
+            if (materialLight != null)
+            {
+                materialLight.SetColor("_EmissionColor", unlockedColor);
+            }
         }
         else
         {
@@ -61,5 +72,18 @@ public abstract class Button : MonoBehaviour
     protected virtual void FindMainButton()
     {
         mainButton = GameObject.Find("MainButton").GetComponent<MainButton>();
+    }
+
+    protected virtual void SetDefColor()
+    {
+        if (lightIndicator != null)
+        {
+            lightIndicator.color = lockedColor;
+        }
+        
+        if (materialLight != null)
+        {
+            materialLight.SetColor("_EmissionColor", lockedColor);
+        }
     }
 }

@@ -107,7 +107,10 @@ public class Player : MonoBehaviour
         if(other.CompareTag("Button"))
         {
             FirstButton firstButton = other.GetComponent<FirstButton>();
+            SecondButton secondButton  = other.GetComponent<SecondButton>();
+            ThirdButton thirdButton = other.GetComponent<ThirdButton>();
             MainButton mainButton = other.GetComponent<MainButton>();
+
             if(mainButton != null)
             {
                 mainButton.ShowUIText(true);
@@ -117,21 +120,44 @@ public class Player : MonoBehaviour
             {
                 firstButton.ShowUIText(true);
             }
+
+            if(secondButton != null)
+            {
+                secondButton.ShowUIText(true);
+            }
+
+            if(thirdButton != null)
+            {
+                thirdButton.ShowUIText(true);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other) 
     {
         FirstButton firstButton = other.GetComponent<FirstButton>();
-            MainButton mainButton = other.GetComponent<MainButton>();
-            if(mainButton != null)
-            {
-                mainButton.ShowUIText(false);
-            }
+        SecondButton secondButton  = other.GetComponent<SecondButton>();
+        ThirdButton thirdButton = other.GetComponent<ThirdButton>();
+        MainButton mainButton = other.GetComponent<MainButton>();
             
-            if(firstButton != null)
-            {
-                firstButton.ShowUIText(false);
-            }
+        if(mainButton != null)
+        {
+            mainButton.ShowUIText(false);
+        }
+            
+        if(firstButton != null)
+        {
+            firstButton.ShowUIText(false);
+        }
+
+        if(secondButton != null)
+        {
+            secondButton.ShowUIText(false);
+        }
+
+        if(thirdButton != null)
+        {
+            thirdButton.ShowUIText(false);
+        }
     }
 }
