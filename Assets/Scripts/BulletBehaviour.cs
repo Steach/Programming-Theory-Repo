@@ -70,6 +70,15 @@ public class BulletBehaviour : MonoBehaviour
                     Destroy(gameObject);
                 }                
             }
+
+            if (hit.collider.CompareTag("Wall"))
+            {
+                //Vector 3 wallPosition2 = hit.
+                //Transform wallTransform = hit.collider.GetComponent<Transform>();
+                Vector3 wallPosition = hit.point;
+                Debug.Log(wallPosition);
+                Destroy(gameObject);
+            }
         }
         
         previuslyPosition = currentPosition;
