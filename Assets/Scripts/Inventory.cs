@@ -54,7 +54,6 @@ public class Inventory : MonoBehaviour
         SniperBullets = 30;
         HandgunBullets = 32;
         invInstance++;
-        Debug.Log("invInstance: " + invInstance);
 
         if (instance == null)
         {
@@ -70,7 +69,7 @@ public class Inventory : MonoBehaviour
     private void OnDestroy() 
     {
         invInstance--;
-        Debug.Log("OnDestroy invInstance: " + invInstance);
+        //Debug.Log("OnDestroy invInstance: " + invInstance);
     }
     
     public void DebugMethod()
@@ -78,7 +77,7 @@ public class Inventory : MonoBehaviour
         AssaultBullets += 120;
         SniperBullets += 30;
         HandgunBullets += 32;
-        Debug.Log("Bullets++: " + AssaultBullets + " " + SniperBullets + " " + HandgunBullets);
+        //Debug.Log("Bullets++: " + AssaultBullets + " " + SniperBullets + " " + HandgunBullets);
     }
 
     public void BulletsStuff(int bulNum, int clips)

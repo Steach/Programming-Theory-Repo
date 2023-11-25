@@ -17,6 +17,7 @@ public class BulletBehaviour : MonoBehaviour
     private int weaponIndex;
     private List<Enemy> enemies = new List<Enemy>();
     private List<int> enemyIds = new List<int>();
+    [SerializeField] private ParticleSystem hitImpact;
     
     // Start is called before the first frame update
     void Start()
@@ -71,12 +72,14 @@ public class BulletBehaviour : MonoBehaviour
                 }                
             }
 
-            if (hit.collider.CompareTag("Wall"))
+            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Ground"))
             {
-                //Vector 3 wallPosition2 = hit.
-                //Transform wallTransform = hit.collider.GetComponent<Transform>();
                 Vector3 wallPosition = hit.point;
-                Debug.Log(wallPosition);
+                //Quaternion hitRotation = gameObject.transform.rotation;
+                //Quaternion hitRotation = hit.collider.transform.rotation;
+                Quaternion hitRotation = Quaternion.FromToRotation(-Vector3.forward, direction);
+                ParticleSystem particleInstance = Instantiate(hitImpact, wallPosition, hitRotation);
+                Destroy(particleInstance.gameObject, particleInstance.main.duration);
                 Destroy(gameObject);
             }
         }
