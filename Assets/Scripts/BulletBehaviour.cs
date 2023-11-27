@@ -72,7 +72,7 @@ public class BulletBehaviour : MonoBehaviour
                 }                
             }
 
-            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Ground"))
+            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Celling"))
             {
                 Vector3 wallPosition = hit.point;
                 //Quaternion hitRotation = gameObject.transform.rotation;

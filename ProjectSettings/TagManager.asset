@@ -14,6 +14,7 @@ TagManager:
   - Wall
   - NotWall
   - Button
+  - Celling
   layers:
   - Default
   - TransparentFX
