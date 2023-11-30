@@ -13,7 +13,7 @@ public class BulletBehaviour : MonoBehaviour
     private float damage;
     private Enemy enemy;
     private int enemiesCount;
-    private float bulletSpeed;
+    [SerializeField] private float bulletSpeed;
     private int weaponIndex;
     private List<Enemy> enemies = new List<Enemy>();
     private List<int> enemyIds = new List<int>();
@@ -26,7 +26,6 @@ public class BulletBehaviour : MonoBehaviour
         FindWeapon();
         previuslyPosition = transform.position;
         lifeTime = 0;
-        bulletSpeed = 50f;
         bulletrb = GetComponent<Rigidbody>();
     }
 
