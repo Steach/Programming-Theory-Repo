@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private float health = 100;
     private float stamina = 100;
     private bool playerIsDead = false;
+    private bool isShooting = false;
     //private MainButton mainButton;
     //private FirstButton firstButton;
     // Start is called before the first frame update
@@ -159,5 +160,15 @@ public class Player : MonoBehaviour
         {
             thirdButton.ShowUIText(false);
         }
+    }
+
+    public void SetShooting(bool shooting)
+    {
+        isShooting = shooting;
+    }
+
+    public bool GetShooting()
+    {
+        return isShooting;
     }
 }

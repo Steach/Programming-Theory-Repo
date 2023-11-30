@@ -74,8 +74,6 @@ public class BulletBehaviour : MonoBehaviour
             if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Celling"))
             {
                 Vector3 wallPosition = hit.point;
-                //Quaternion hitRotation = gameObject.transform.rotation;
-                //Quaternion hitRotation = hit.collider.transform.rotation;
                 Quaternion hitRotation = Quaternion.FromToRotation(-Vector3.forward, direction);
                 ParticleSystem particleInstance = Instantiate(hitImpact, wallPosition, hitRotation);
                 Destroy(particleInstance.gameObject, particleInstance.main.duration);
@@ -161,21 +159,3 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 }
-
-/*
-draft
-
-if (target == null)
-{
-    target = hit.collider.gameObject;
-}
-else if (target != null)
-{
-    Debug.Log("Bullet hit the target!");
-    Destroy(gameObject);
-}
-
-//transform.Translate(Vector3.left * bulletSpeed * Time.deltaTime);
-//Debug.DrawLine(transform.position, (transform.position + bulletDirection) * 100, Color.red);
-
-*/

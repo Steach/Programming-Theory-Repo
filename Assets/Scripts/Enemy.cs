@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     private bool dead = false;
     private bool fall = false;
     private bool aggressive = false;
+    private bool hearNoise = false;
     private float speed = 10;
     private float maxDistance = 5;
     private float timer;
@@ -29,6 +30,9 @@ public class Enemy : MonoBehaviour
     private float _t;
     private FieldOfVision fieldOfVision;
     private int _id;
+    private GameObject player;
+    private Player playerScript;
+    private float distToPlayer;
     
     [Header("Sound")]
     [SerializeField] private AudioSource audioSource;
@@ -39,6 +43,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindPlayer();
         fieldOfVision = GetComponent<FieldOfVision>();
         healthSlider.maxValue = health;
         healthSlider.value = health;
@@ -65,6 +70,7 @@ public class Enemy : MonoBehaviour
         ZDead();
         ZAggrissive();
         ZombieMoan();
+        CheckToNoise();
     }
 
     public void ShootEnemy(float damage)
@@ -79,19 +85,23 @@ public class Enemy : MonoBehaviour
 
     private void EnemyWalking()
     {
-        _t = Time.deltaTime * 0.5f;
-        Debug.DrawLine(startPosition, transform.position, Color.red);
-        float distance = Vector3.Distance(startPosition, transform.position);
-        if(!playerInTarget && distance <= maxDistance && !dead)
+        if(!hearNoise)
         {
-            transform.Translate(Vector3.forward * (speed / 20) * Time.deltaTime);
+            _t = Time.deltaTime * 0.5f;
+            Debug.DrawLine(startPosition, transform.position, Color.red);
+            float distance = Vector3.Distance(startPosition, transform.position);
+            if(!playerInTarget && distance <= maxDistance && !dead)
+            {
+                transform.Translate(Vector3.forward * (speed / 20) * Time.deltaTime);
 
-        } else if (!playerInTarget && distance >= maxDistance && !dead)
-        {
-            startPosition = transform.position;
-            RotateEnemy();
-            distance = 0;
+            } else if (!playerInTarget && distance >= maxDistance && !dead)
+            {
+                startPosition = transform.position;
+                RotateEnemy();
+                distance = 0;
+            }
         }
+        
     }
 
     private void FollowPlayer()
@@ -221,5 +231,38 @@ public class Enemy : MonoBehaviour
     public bool TakeDead()
     {
         return dead;
+    }
+
+    private void DistanceToPlayer()
+    {
+        Vector3 playerPosition = player.transform.position;
+        distToPlayer = Vector3.Distance(transform.position, playerPosition);
+    }
+
+    private void FindPlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = player.GetComponent<Player>();
+    }
+
+    private void CheckToNoise()
+    {
+        DistanceToPlayer();
+        if (distToPlayer <= 50 && playerScript.GetShooting())
+        {
+            hearNoise = true;
+            ReactToNoise(player.transform.position);
+        }
+    }
+
+    private void ReactToNoise(Vector3 noiseLoc)
+    {
+        Vector3 direction = noiseLoc - transform.position;
+        transform.Translate(direction * (speed / 20) * Time.deltaTime);
+        float distance = Vector3.Distance(transform.position, noiseLoc);
+        if(distance < 1)
+        {
+            hearNoise = false;
+        }
     }
 }

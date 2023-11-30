@@ -32,6 +32,8 @@ public class Weapon : MonoBehaviour
     protected Vector3 currentPos;
     protected bool aiming;
     protected bool reloadable;
+    protected bool isShooting;
+    protected Player player;
     
     void Awake()
     {
@@ -137,5 +139,10 @@ public class Weapon : MonoBehaviour
     virtual protected void AimPosition(GameObject weapon)
     {
         weapon.transform.position = new Vector3(aimPosition.transform.position.x, aimPosition.transform.position.y, aimPosition.transform.position.z);
+    }
+
+    virtual protected void FindPlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 }

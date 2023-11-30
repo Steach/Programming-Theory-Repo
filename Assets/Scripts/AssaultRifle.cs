@@ -12,7 +12,9 @@ public class AssaultRifle : Weapon
     // Start is called before the first frame update
     void Start()
     {
+        FindPlayer();
         aiming = false;
+        isShooting = false;
         fireTimeout = 0;
         clipCapacity = 20;
         shotsPerMin = 1;
@@ -49,10 +51,12 @@ public class AssaultRifle : Weapon
             Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce, shootAudioClip, playAudio);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
+            player.SetShooting(true);
         }
         else
         {
             shootExplosion.Stop();
+            player.SetShooting(false);
         }
     }
 

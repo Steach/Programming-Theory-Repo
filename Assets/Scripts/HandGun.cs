@@ -12,6 +12,7 @@ public class HandGun : Weapon
     // Start is called before the first frame update
     void Start()
     {
+        FindPlayer();
         fireTimeout = 0;
         clipCapacity = 8;
         shotsPerMin = 1;

@@ -18,6 +18,7 @@ public class SniperRifle : Weapon
     // Start is called before the first frame update
     void Start()
     {
+        FindPlayer();
         fireTimeout = 0;
         clipCapacity = 5;
         shotsPerMin = 1;
