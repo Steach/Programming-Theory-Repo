@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
@@ -33,6 +32,9 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Player playerScript;
     private float distToPlayer;
+    private NavMeshAgent navMeshAgent;
+    private float hearingDistance = 50f;
+    private Vector3 noiseLoc;
     
     [Header("Sound")]
     [SerializeField] private AudioSource audioSource;
@@ -44,6 +46,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         FindPlayer();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         fieldOfVision = GetComponent<FieldOfVision>();
         healthSlider.maxValue = health;
         healthSlider.value = health;
@@ -108,6 +111,7 @@ public class Enemy : MonoBehaviour
     {
         if (playerInTarget)
         {
+            navMeshAgent.isStopped = true;
             GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
             if(playersObj.Length > 0  && !dead)
             {
@@ -218,8 +222,6 @@ public class Enemy : MonoBehaviour
         {
             playerCollision = false;
         }
-
-        Debug.Log(distance);
         return playerCollision;
     }
 
@@ -235,8 +237,11 @@ public class Enemy : MonoBehaviour
 
     private void DistanceToPlayer()
     {
-        Vector3 playerPosition = player.transform.position;
-        distToPlayer = Vector3.Distance(transform.position, playerPosition);
+        if(!playerInTarget)
+        {
+            Vector3 playerPosition = player.transform.position;
+            distToPlayer = Vector3.Distance(transform.position, playerPosition);
+        } 
     }
 
     private void FindPlayer()
@@ -247,22 +252,42 @@ public class Enemy : MonoBehaviour
 
     private void CheckToNoise()
     {
-        DistanceToPlayer();
-        if (distToPlayer <= 50 && playerScript.GetShooting())
+        if(dead)
         {
+            hearNoise = false;
+            navMeshAgent.isStopped = true;
+        }
+
+        DistanceToPlayer();
+        if (distToPlayer <= 50 && playerScript.GetShooting() && !aggressive && !hearNoise)
+        {
+            noiseLoc = player.transform.position;
             hearNoise = true;
-            ReactToNoise(player.transform.position);
+            ReactToNoise();
+        }
+
+        if (hearNoise)
+        {
+            float distanceToNoise = Vector3.Distance(transform.position, noiseLoc);
+            if(distanceToNoise < 1 && !aggressive)
+            {
+                ReactToNoNoise();
+            }
         }
     }
 
-    private void ReactToNoise(Vector3 noiseLoc)
+    private void ReactToNoise()
     {
+        navMeshAgent.isStopped = false;
         Vector3 direction = noiseLoc - transform.position;
-        transform.Translate(direction * (speed / 20) * Time.deltaTime);
-        float distance = Vector3.Distance(transform.position, noiseLoc);
-        if(distance < 1)
-        {
-            hearNoise = false;
-        }
+        direction.y = 0f;
+        direction.Normalize();
+        navMeshAgent.SetDestination(transform.position + direction * hearingDistance);
+    }
+
+    private void ReactToNoNoise()
+    {
+        startPosition = noiseLoc;
+        hearNoise = false;        
     }
 }
