@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour
     private bool dead = false;
     private bool fall = false;
     private bool aggressive = false;
-    private bool hearNoise = false;
     private float speed = 10;
     private float maxDistance = 5;
     private float timer;
@@ -34,8 +33,13 @@ public class Enemy : MonoBehaviour
     private float distToPlayer;
     private NavMeshAgent navMeshAgent;
     private float hearingDistance = 50f;
-    private Vector3 noiseLoc;
-    
+   
+
+    [Header("Noise")]
+    [SerializeField] private Vector3 noiseLoc;
+    [SerializeField] private bool hearNoise = false;
+    [SerializeField] private float distanceToNoise;
+
     [Header("Sound")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] zombieMoans;
@@ -89,22 +93,34 @@ public class Enemy : MonoBehaviour
     private void EnemyWalking()
     {
         if(!hearNoise)
-        {
-            _t = Time.deltaTime * 0.5f;
-            Debug.DrawLine(startPosition, transform.position, Color.red);
-            float distance = Vector3.Distance(startPosition, transform.position);
-            if(!playerInTarget && distance <= maxDistance && !dead)
+        {            
+            Vector3 localForward = transform.TransformDirection(Vector3.forward);
+            Vector3 globalForward = transform.position + localForward;
+            navMeshAgent.SetDestination(globalForward);
+            if(navMeshAgent.velocity.magnitude < 0.1f)
             {
-                transform.Translate(Vector3.forward * (speed / 20) * Time.deltaTime);
-
-            } else if (!playerInTarget && distance >= maxDistance && !dead)
-            {
-                startPosition = transform.position;
-                RotateEnemy();
-                distance = 0;
+                float angleOfRotate = Random.Range(-30, 30);
+                Vector3 newEulerAngels = transform.eulerAngles;
+                newEulerAngels.y += angleOfRotate;
+                transform.eulerAngles = newEulerAngels;
             }
         }
-        
+
+        if(hearNoise)
+        {
+            Vector3 direction = noiseLoc;
+            direction.y = 0f;
+            direction.Normalize();
+            navMeshAgent.SetDestination(noiseLoc);
+            if(navMeshAgent.velocity.magnitude < 0.1f)
+            {
+                float angleOfRotate = Random.Range(170, 180);
+                Vector3 newEulerAngels = transform.eulerAngles;
+                newEulerAngels.y += angleOfRotate;
+                transform.eulerAngles = newEulerAngels;
+                hearNoise = false;
+            }
+        }
     }
 
     private void FollowPlayer()
@@ -128,11 +144,6 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void RotateEnemy()
-    {
-        transform.Rotate(Vector3.up, 180.0f);
     }
 
     private void ZDead()
@@ -235,15 +246,6 @@ public class Enemy : MonoBehaviour
         return dead;
     }
 
-    private void DistanceToPlayer()
-    {
-        if(!playerInTarget)
-        {
-            Vector3 playerPosition = player.transform.position;
-            distToPlayer = Vector3.Distance(transform.position, playerPosition);
-        } 
-    }
-
     private void FindPlayer()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -261,33 +263,24 @@ public class Enemy : MonoBehaviour
         DistanceToPlayer();
         if (distToPlayer <= 50 && playerScript.GetShooting() && !aggressive && !hearNoise)
         {
+            Debug.Log("Hear the Noise!");
+            Debug.Log(hearNoise);
             noiseLoc = player.transform.position;
             hearNoise = true;
-            ReactToNoise();
         }
 
         if (hearNoise)
         {
-            float distanceToNoise = Vector3.Distance(transform.position, noiseLoc);
-            if(distanceToNoise < 1 && !aggressive)
-            {
-                ReactToNoNoise();
-            }
+            distanceToNoise = Vector3.Distance(transform.position, noiseLoc);
         }
     }
 
-    private void ReactToNoise()
+    private void DistanceToPlayer()
     {
-        navMeshAgent.isStopped = false;
-        Vector3 direction = noiseLoc - transform.position;
-        direction.y = 0f;
-        direction.Normalize();
-        navMeshAgent.SetDestination(transform.position + direction * hearingDistance);
-    }
-
-    private void ReactToNoNoise()
-    {
-        startPosition = noiseLoc;
-        hearNoise = false;        
+        if(!playerInTarget)
+        {
+            Vector3 playerPosition = player.transform.position;
+            distToPlayer = Vector3.Distance(transform.position, playerPosition);
+        } 
     }
 }

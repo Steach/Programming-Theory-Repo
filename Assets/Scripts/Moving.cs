@@ -111,7 +111,6 @@ public class Moving : MonoBehaviour
         if (other.gameObject.CompareTag("Wall"))
         {
             currentPos = transform.position;
-            Debug.Log(currentPos);
         }
 
         if (other.gameObject.CompareTag("NotWall"))
