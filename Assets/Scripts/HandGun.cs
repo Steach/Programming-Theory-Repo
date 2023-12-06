@@ -15,6 +15,7 @@ public class HandGun : Weapon
         FindPlayer();
         fireTimeout = 0;
         clipCapacity = 8;
+        hearingDistance = 25f;
         shotsPerMin = 1;
         reloadTime = 1;
         kickbacklForce = 3;
@@ -49,10 +50,12 @@ public class HandGun : Weapon
             Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce, shootAudioClip, playAudio);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
+            player.SetShooting(true, hearingDistance);
         }
         else
         {
             shootExplosion.Stop();
+            player.SetShooting(false, hearingDistance);
         }
     }
 

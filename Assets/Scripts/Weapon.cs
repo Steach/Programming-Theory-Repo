@@ -34,6 +34,7 @@ public class Weapon : MonoBehaviour
     protected bool reloadable;
     protected bool isShooting;
     protected Player player;
+    protected float hearingDistance;
     
     void Awake()
     {

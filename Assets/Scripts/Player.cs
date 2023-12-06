@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private float stamina = 100;
     private bool playerIsDead = false;
     private bool isShooting = false;
+    private float noiseArea;
     //private MainButton mainButton;
     //private FirstButton firstButton;
     // Start is called before the first frame update
@@ -162,13 +163,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetShooting(bool shooting)
+    public void SetShooting(bool shooting, float distance)
     {
         isShooting = shooting;
+        noiseArea = distance;
     }
 
-    public bool GetShooting()
+    public (bool, float) GetShooting()
     {
-        return isShooting;
+        return (isShooting, noiseArea);
     }
 }

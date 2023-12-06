@@ -20,6 +20,7 @@ public class SniperRifle : Weapon
     {
         FindPlayer();
         fireTimeout = 0;
+        hearingDistance = 90f;
         clipCapacity = 5;
         shotsPerMin = 1;
         reloadTime = 3;
@@ -55,10 +56,12 @@ public class SniperRifle : Weapon
             Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce, shootAudioClip, playAudio);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
+            player.SetShooting(true, hearingDistance);
         }
         else
         {
             shootExplosion.Stop();
+            player.SetShooting(false, hearingDistance);
         }
     }
 

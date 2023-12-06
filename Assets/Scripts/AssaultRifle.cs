@@ -16,6 +16,7 @@ public class AssaultRifle : Weapon
         aiming = false;
         isShooting = false;
         fireTimeout = 0;
+        hearingDistance = 50f;
         clipCapacity = 20;
         shotsPerMin = 1;
         reloadTime = 2;
@@ -51,12 +52,12 @@ public class AssaultRifle : Weapon
             Shoot(bulletPrefab, firePosition, shootExplosion, recoilForce, shootAudioClip, playAudio);
             currentClipCapacity -= 1;
             fireTimeout = 0f;
-            player.SetShooting(true);
+            player.SetShooting(true, hearingDistance);
         }
         else
         {
             shootExplosion.Stop();
-            player.SetShooting(false);
+            player.SetShooting(false, hearingDistance);
         }
     }
 

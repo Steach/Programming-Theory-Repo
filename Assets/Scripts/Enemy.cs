@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector3 noiseLoc;
     [SerializeField] private bool hearNoise = false;
     [SerializeField] private float distanceToNoise;
+    private bool playerIsNoise = false;
 
     [Header("Sound")]
     [SerializeField] private AudioSource audioSource;
@@ -97,7 +99,7 @@ public class Enemy : MonoBehaviour
             Vector3 localForward = transform.TransformDirection(Vector3.forward);
             Vector3 globalForward = transform.position + localForward;
             navMeshAgent.SetDestination(globalForward);
-            if(navMeshAgent.velocity.magnitude < 0.1f)
+            if(navMeshAgent.velocity.magnitude < 0.1f && !playerInTarget && !dead)
             {
                 float angleOfRotate = Random.Range(-30, 30);
                 Vector3 newEulerAngels = transform.eulerAngles;
@@ -112,7 +114,7 @@ public class Enemy : MonoBehaviour
             direction.y = 0f;
             direction.Normalize();
             navMeshAgent.SetDestination(noiseLoc);
-            if(navMeshAgent.velocity.magnitude < 0.1f)
+            if(navMeshAgent.velocity.magnitude < 0.1f && !playerInTarget && !dead)
             {
                 float angleOfRotate = Random.Range(170, 180);
                 Vector3 newEulerAngels = transform.eulerAngles;
@@ -261,7 +263,8 @@ public class Enemy : MonoBehaviour
         }
 
         DistanceToPlayer();
-        if (distToPlayer <= 50 && playerScript.GetShooting() && !aggressive && !hearNoise)
+        GetNoiseParams();
+        if (distToPlayer <= hearingDistance && playerIsNoise && !aggressive && !hearNoise)
         {
             Debug.Log("Hear the Noise!");
             Debug.Log(hearNoise);
@@ -282,5 +285,10 @@ public class Enemy : MonoBehaviour
             Vector3 playerPosition = player.transform.position;
             distToPlayer = Vector3.Distance(transform.position, playerPosition);
         } 
+    }
+
+    private void GetNoiseParams()
+    {
+        (playerIsNoise, hearingDistance) = playerScript.GetShooting();
     }
 }
