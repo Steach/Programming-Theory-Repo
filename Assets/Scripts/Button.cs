@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Button : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public abstract class Button : MonoBehaviour
     protected Color unlockedColor;
     protected MainButton mainButton;
     [SerializeField] protected Light lightIndicator;
+    
+    [Header("Win")]
+    [SerializeField] protected GameObject winOnject;
+    [SerializeField] protected GameObject panel;
+    protected float duration;
+    protected Color targetColor = Color.black;
     // Start is called before the first frame update
     void Start()
     {

@@ -88,7 +88,6 @@ public class Enemy : MonoBehaviour
         {
             health -= damage;
             healthSlider.value = health;
-            Debug.Log("Health: " + health);
         }
     }
 
